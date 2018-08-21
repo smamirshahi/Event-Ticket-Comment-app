@@ -20,7 +20,7 @@ import { Event } from './entity'
 @JsonController()
 export default class GameController {
 
-  // @Authorized()
+  @Authorized()
   // @Post('/games')
   @Post('/addevent')
   @HttpCode(201)

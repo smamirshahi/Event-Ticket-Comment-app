@@ -1,5 +1,6 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity/* , ManyToOne */ } from 'typeorm'
 // import User from '../users/entity'
+// import Event from '../events/entity'
 
 // export type Symbol = 'x' | 'o'
 // export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
@@ -11,29 +12,32 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity/* , ManyToOne */ } f
 // const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 @Entity()
-export class Event extends BaseEntity {
+export class Ticket extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
-
-  @Column('text', {nullable: false})
-  title
-
-  @Column('text', {nullable: false})
-  description
-
+  
   @Column('text', {nullable: false})
   picture
 
+  @Column('int', {nullable: false})
+  price
+  
   @Column('text', {nullable: false})
-  start
+  description
 
+  @Column('int', {nullable: false})
+  risk
+  
   @Column('text', {nullable: false})
-  end
+  timeAdded
 
-  // @ManyToOne(_ => User, user => user.events)
+  // @ManyToOne(_ => User, user => user.tickets)
   // user: User
 
-  // @OneToMany(_ => Ticket, ticket => ticket.event, {eager:true}) 
-  // tickets: Ticket[]
+  // @ManyToOne(_ => Event, event => event.tickets)
+  // event: Event
+
+  // @OneToMany(_ => Comment, comment => comment.ticket, {eager:true}) 
+  // comments: Comment[]
 }
