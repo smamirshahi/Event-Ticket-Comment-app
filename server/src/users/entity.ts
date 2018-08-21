@@ -3,7 +3,7 @@ import { Exclude } from 'class-transformer';
 import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
 import { Player } from '../games/entities';
-// import {Event} from '../events/entities'
+// import { Event } from '../events/entity'
 
 @Entity()
 export default class User extends BaseEntity {
@@ -45,6 +45,6 @@ export default class User extends BaseEntity {
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
-  // @OneToMany(_ => Event, event => event.user) 
+  // @OneToMany(_ => Event, event => event.user, {eager:true}) 
   // events: Event[]
 }

@@ -1,13 +1,13 @@
 import { 
-  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
+  JsonController, Authorized/* , CurrentUser */, Post, Param/* , BadRequestError */, HttpCode/* , NotFoundError, ForbiddenError */, Get, 
+  Body/* , Patch */ 
 } from 'routing-controllers'
-import User from '../users/entity'
+// import User from '../users/entity'
 // import { Game, Player, Board } from './entities'
-import { Event } from './entities'
+import { Event } from './entity'
 // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
-import { Validate } from 'class-validator'
-import {io} from '../index'
+// import { Validate } from 'class-validator'
+// import {io} from '../index'
 
 // class GameUpdate {
 
@@ -20,9 +20,9 @@ import {io} from '../index'
 @JsonController()
 export default class GameController {
 
-  @Authorized()
+  // @Authorized()
   // @Post('/games')
-  @Post('/events/addevent')
+  @Post('/addevent')
   @HttpCode(201)
   async createEvent(
     @Body() event: Event
