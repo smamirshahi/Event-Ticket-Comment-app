@@ -17,4 +17,9 @@ h2 {
     padding: 20px;
     width: 60%;
   }
+
+  .textss {
+    display: flex;
+    color: red
+  }
   
