@@ -21,9 +21,23 @@ export default class SignupForm extends PureComponent {
 		return (
       <div className="signup-form">
   			<form onSubmit={this.handleSubmit}>
-  				<label>
+				<label>
+            Firstname
+            <input type="text" name="firstName" value={
+  						this.state.firstName || ''
+  					} onChange={ this.handleChange } />
+          </label>
+
+					<label>
+            Lastname
+            <input type="text" name="lastName" value={
+  						this.state.lastName || ''
+  					} onChange={ this.handleChange } />
+          </label>
+					
+					<label>
             Email
-            <input type="email" name="email" value={
+            <input type="text" name="email" value={
   						this.state.email || ''
   					} onChange={ this.handleChange } />
           </label>
@@ -47,6 +61,12 @@ export default class SignupForm extends PureComponent {
   					this.state.confirmPassword &&
   					this.state.password !== this.state.confirmPassword &&
   					<p style={{color:'red'}}>The passwords do not match!</p>
+					}
+					
+					{
+						this.state.password &&
+						this.state.password.length < 8 &&
+  					<p style={{color:'red'}}>The password must be at least 8 characters!</p>
   				}
 
   				<button type="submit">Sign up</button>

@@ -19,7 +19,7 @@ const TopBar = (props) => {
         </Typography>
         {
           user &&
-          <Button color="inherit"><AccountIcon /> { user.firstName }</Button>
+          <Button color="inherit"><AccountIcon /> { user.firstName.concat(` ${user.lastName}`) }</Button>
         }
 
         {
