@@ -55,7 +55,7 @@ export const getEvents = () => (dispatch, getState) => {
 //     .catch(err => console.error(err))
 // }
 
-export const createEvent = () => (dispatch, getState) => {
+export const createEvent = (title, description, picture, start, end) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt
 
@@ -64,6 +64,7 @@ export const createEvent = () => (dispatch, getState) => {
   request
     .post(`${baseUrl}/events`)
     .set('Authorization', `Bearer ${jwt}`)
+    .send({ title, description, picture, start, end })
     .then(result => dispatch(addEvent(result.body)))
     .catch(err => console.error(err))
 }
