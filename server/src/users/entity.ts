@@ -4,6 +4,8 @@ import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
 import { Player } from '../games/entities';
 // import { Event } from '../events/entity'
+// import { Ticket } from '../tickets/entity'
+// import { Comment } from '../comments/entity'
 
 @Entity()
 export default class User extends BaseEntity {
@@ -47,4 +49,10 @@ export default class User extends BaseEntity {
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   // @OneToMany(_ => Event, event => event.user, {eager:true}) 
   // events: Event[]
+
+  // @OneToMany(_ => Ticket, ticket => ticket.user, {eager:true}) 
+  // tickets: Ticket[]
+
+  // @OneToMany(_ => Comment, comment => comment.user, {eager:true}) 
+  // comments: Comment[]
 }
