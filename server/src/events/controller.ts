@@ -7,7 +7,7 @@ import {
 import { Event } from './entity'
 // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
 // import { Validate } from 'class-validator'
-// import {io} from '../index'
+import {io} from '../index'
 
 // class GameUpdate {
 
@@ -22,16 +22,16 @@ export default class GameController {
 
   @Authorized()
   // @Post('/games')
-  @Post('/addevent')
+  @Post('/events')
   @HttpCode(201)
   async createEvent(
-    @Body() event: Event
+    @Body() data: Event
   ) {
   // async createGame(
   // async createEvent(
   //   @CurrentUser() user: User
   // ) {
-    const entity = await event.save()
+    const entity = await data.save()
 
     // await Event.create({
     //   event: entity, 
@@ -39,12 +39,12 @@ export default class GameController {
     //   symbol: 'x'
     // }).save()
 
-    // const game = await Game.findOneById(entity.id)
+    // const event = await Event.findOneById(entity.id)
 
-    // io.emit('action', {
-    //   type: 'ADD_GAME',
-    //   payload: game
-    // })
+    io.emit('action', {
+      type: 'ADD_EVENT',
+      payload: entity
+    })
 
     return entity
   }

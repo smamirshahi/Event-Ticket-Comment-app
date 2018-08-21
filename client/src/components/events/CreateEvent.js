@@ -1,13 +1,64 @@
-import React, { PureComponent } from 'react'
-// import './Board.css'
+import React, {PureComponent} from 'react'
+import './EventsList.css'
 
-export class CreateEvent extends PureComponent {
-    render() {
-        {console.log("hello all")}
+export default class CreateEvent extends PureComponent {
+	state = {}
 
-        return (<div>
-            <p>hello</p>
-        </div>
-        )
-    }
+	handleSubmit = (e) => {
+		e.preventDefault()
+		this.props.onSubmit(this.state)
+	}
+
+	handleChange = (event) => {
+    const {name, value} = event.target
+
+    this.setState({
+      [name]: value
+    })
+  }
+
+	render() {
+		return (
+      <div className="signup-form">
+  			<form onSubmit={this.handleSubmit}>
+				<label>
+            Title
+            <input type="text" name="title" value={
+  						this.state.title || ''
+  					} onChange={ this.handleChange } />
+          </label>
+
+					<label>
+            Description
+            <input type="text" name="description" value={
+  						this.state.description || ''
+  					} onChange={ this.handleChange } />
+          </label>
+					
+					<label>
+            Picture
+            <input type="text" name="picture" value={
+  						this.state.picture || ''
+  					} onChange={ this.handleChange } />
+          </label>
+  					
+  				<label>
+            Start
+  					<input type="text" name="start" value={
+  						this.state.start || ''
+  					} onChange={ this.handleChange } />
+  				</label>
+
+  				<label>
+            End
+  					<input type="text" name="end" value={
+  						this.state.end || ''
+  					} onChange={ this.handleChange } />
+  				</label>
+
+  				<button type="submit">Sign up</button>
+  			</form>
+      </div>
+		)
+	}
 }

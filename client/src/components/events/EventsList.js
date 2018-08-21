@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { getEvents, createEvent } from '../../actions/events'
 import { getUsers } from '../../actions/users'
-import { CreateEvent } from './CreateEvent'
+import CreateEvent from './CreateEvent'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Button from 'material-ui/Button'
@@ -18,6 +18,11 @@ class EventsList extends PureComponent {
             if (this.props.users === null) this.props.getUsers()
         }
     }
+
+    handleSubmit = (data) => {
+        // this.props.history.push(`/events/${event.id}`)
+		this.props.createEvent(data.title, data.description, data.picture, data.start, data.end)
+	}
 
     renderEvent = (event) => {
         const { users, history } = this.props
@@ -63,6 +68,14 @@ class EventsList extends PureComponent {
         if (events === null || users === null) return null
 
         return (<Paper className="outer-paper">
+            <div>
+                {events.map(event => this.renderEvent(event))}
+            </div>
+            
+            <h2>Create A New Event</h2>
+
+            <CreateEvent onSubmit={this.handleSubmit} />
+
             <Button disabled={!this.props.authenticated}
                 color="primary"
                 variant="raised"
@@ -72,10 +85,6 @@ class EventsList extends PureComponent {
             >
                 Create A New Event
       </Button>
-
-            <div>
-                {events.map(event => this.renderEvent(event))}
-            </div>
         </Paper>)
     }
 }
@@ -89,6 +98,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     getEvents, getUsers, createEvent
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsList)
