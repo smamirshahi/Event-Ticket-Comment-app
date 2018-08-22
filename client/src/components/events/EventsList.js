@@ -34,6 +34,9 @@ class EventsList extends PureComponent {
                 <Typography variant="headline" component="h2">
                     {event.title}
                 </Typography>
+                <Typography variant="subheading" component="h2">
+                    Created by: {event.author}
+                </Typography>
                 <CardMedia
                     className="event-media"
                     title={event.title}
@@ -61,7 +64,7 @@ class EventsList extends PureComponent {
 
     render() {
         const { events, users, authenticated/* , createEvent */ } = this.props
-
+        let n = new Date();        
         if (!authenticated) return (
             <Redirect to="/login" />
         )
@@ -71,7 +74,9 @@ class EventsList extends PureComponent {
 
         return (<Paper className="outer-paper">
             <div>
-                {events.map(event => this.renderEvent(event))}
+                {events.map(event => {
+                    return (n.getTime() < new Date(event.end).getTime()) &&
+                    this.renderEvent(event)})}
             </div>
 
             <h2>Create A New Event</h2>

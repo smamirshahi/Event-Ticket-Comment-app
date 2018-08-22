@@ -1,4 +1,4 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne, OneToMany } from 'typeorm'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne, OneToMany, UpdateDateColumn } from 'typeorm'
 import User from '../users/entity'
 import { Event } from '../events/entity'
 import { Comment } from '../comments/entity'
@@ -22,22 +22,22 @@ export class Ticket extends BaseEntity {
   // eventNumber
   
   @Column('text', {nullable: false})
-  name
+  author: string
   
   @Column('text', {nullable: true})
   picture
 
-  @Column('int', {nullable: true})
+  @Column('int', {nullable: false})
   price
   
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   description
 
   @Column('int', {nullable: true})
   risk
   
-  @Column('text', {nullable: true})
-  timeAdded
+  @UpdateDateColumn({ name: 'updated_at', nullable: false })
+  updatedAt: Date
 
   @ManyToOne(_ => User, user => user.tickets)
   user: User

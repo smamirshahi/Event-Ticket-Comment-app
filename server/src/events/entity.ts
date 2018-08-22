@@ -18,6 +18,9 @@ export class Event extends BaseEntity {
   id?: number
 
   @Column('text', {nullable: false})
+  author: string
+
+  @Column('text', {nullable: false})
   title
 
   @Column('text', {nullable: false})
@@ -26,10 +29,10 @@ export class Event extends BaseEntity {
   @Column('text', {nullable: false})
   picture
 
-  @Column('text', {nullable: false})
+  @Column('date', {nullable: false})
   start
 
-  @Column('text', {nullable: false})
+  @Column('date', {nullable: false})
   end
 
   @ManyToOne(_ => User, user => user.events)

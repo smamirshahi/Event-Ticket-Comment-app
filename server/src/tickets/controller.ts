@@ -31,14 +31,15 @@ import {
       @Body() entity: Ticket
     ) {
       const event = await Event.findOneById(eventId)
+      // const author = await User.findOneById(user.id)
+      const author = user.firstName.concat(` ${user.lastName}`)
   
       const ticket1 = await Ticket.create({
-        name: entity.name,
+        author: author,
         picture: entity.picture,
         price: entity.price,
         description: entity.description,
         risk: entity.risk,
-        timeAdded: entity.timeAdded,
         user,
         event
       }).save()

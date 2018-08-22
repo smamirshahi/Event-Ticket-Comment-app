@@ -24,13 +24,7 @@ export default class CreateTicket extends PureComponent {
 		return (
 			<div className="signup-form">
 				<form onSubmit={this.handleSubmit}>
-					<label>
-						Name
-            <input type="text" name="name" value={
-							this.state.name || ''
-						} onChange={this.handleChange} />
-					</label>
-
+					
                     <label>
 						Picture
             <input type="text" name="picture" value={

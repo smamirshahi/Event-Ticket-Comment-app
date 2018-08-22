@@ -24,7 +24,7 @@ class TicketsList extends PureComponent {
 
     handleSubmit = (data) => {
         // this.props.history.push(`/events/${event.id1}`)
-		this.props.createTicket(data.name, data.picture, data.price, data.description, this.props.match.params.id1)
+		this.props.createTicket(data.picture, data.price, data.description, this.props.match.params.id1)
 	}
 
     renderTicket = (ticket) => {
@@ -33,8 +33,8 @@ class TicketsList extends PureComponent {
 
         return (<Card key={ticket.id} className="ticket-card">
             <CardContent>
-                <Typography variant="headline" component="h2">
-                    {ticket.name}
+                <Typography variant="subheading" component="h2">
+                    Created by: {ticket.author}
                 </Typography>
                 <CardMedia
                     className="ticket-media"
