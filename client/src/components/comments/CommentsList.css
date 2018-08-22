@@ -1,0 +1,25 @@
+h2 {
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  .comment-card {
+    margin: 10px 10px 10px 0px;
+  }
+  
+  .create-comment {
+    margin-top: 10px !important;
+  }
+  
+  .outer-paper {
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    width: 60%;
+  }
+
+  .textss {
+    display: flex;
+    color: red
+  }
+  

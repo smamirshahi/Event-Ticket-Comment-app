@@ -4,8 +4,9 @@ import {
   } from 'routing-controllers'
   import User from '../users/entity'
   // import { Game, Player, Board } from './entities'
-  import { Ticket } from './entity'
-  import { Event } from '../events/entity'
+  import { Comment } from './entity'
+//   import { Event } from '../events/entity'
+  import { Ticket } from '../tickets/entity'
   // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
   // import { Validate } from 'class-validator'
   import {io} from '../index'
@@ -23,33 +24,30 @@ import {
   
     @Authorized()
     // @Post('/games')
-    @Post('/events/:id([0-9]+)/tickets')
+    @Post('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
     @HttpCode(201)
-    async createEvent(
+    async createTicket(
       @CurrentUser() user: User,
-      @Param('id') eventId: number,
-      @Body() entity: Ticket
+    //   @Param('id1') eventId: number,
+      @Param('id2') ticketId: number,
+      @Body() entity: Comment
     ) {
-      const event = await Event.findOneById(eventId)
+    //   const event = await Event.findOneById(eventId)
+      const ticket = await Ticket.findOneById(ticketId)
   
-      const ticket1 = await Ticket.create({
-        name: entity.name,
-        picture: entity.picture,
-        price: entity.price,
-        description: entity.description,
-        risk: entity.risk,
-        timeAdded: entity.timeAdded,
+      const comment1 = await Comment.create({
+        text: entity.text,
         user,
-        event
+        ticket
       }).save()
 
-      const ticket = await Ticket.findOneById(ticket1.id)
+      const comment = await Comment.findOneById(comment1.id)
 
       io.emit('action', {
-        type: 'ADD_TICKET',
-        payload: ticket
+        type: 'ADD_COMMENT',
+        payload: comment
       })
-      return ticket
+      return comment
     }
   
     // @Authorized()
@@ -134,12 +132,13 @@ import {
     // }
   
     // @Authorized()
-    @Get('/events/:id([0-9]+)/tickets')
-    getTickets(
-      @Param('id') id: number
+    @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
+    getComments(
+    //   @Param('id1') eventId: number,
+      @Param('id2') ticketId: number,
     ) {
       // console.log("the /events/:id([0-9]+) with get request is called in ticket controller")
-      return Ticket.find({where: { event_id: id}}) // find tickets with event_id equal to id
+      return Comment.find({where: { ticket_id: ticketId}}) // find tickets with event_id equal to id
     }
   }
   
