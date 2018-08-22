@@ -40,7 +40,6 @@ import {
         price: entity.price,
         description: entity.description,
         risk: entity.risk,
-        timeAdded: entity.timeAdded,
         user,
         event
       }).save()
