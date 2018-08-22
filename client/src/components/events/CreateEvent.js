@@ -21,7 +21,7 @@ export default class CreateEvent extends PureComponent {
 	render() {
 		// let n =  new Date();
 		// let currentDate = `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`
-		let currentDate = new Date().toISOString().split("T")[0];
+		// let currentDate = new Date().toISOString().split("T")[0];
 		return (
 			<div className="signup-form">
 				<form onSubmit={this.handleSubmit}>
@@ -48,7 +48,7 @@ export default class CreateEvent extends PureComponent {
 
 					<label>
 						Start
-  					<input type="date" min={currentDate} name="start" value={
+  					<input type="date" /* min={currentDate} */ name="start" value={
 							this.state.start || ''
 						} onChange={this.handleChange} />
 					</label>

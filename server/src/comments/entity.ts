@@ -18,6 +18,9 @@ export class Comment extends BaseEntity {
   id?: number
 
   @Column('text', {nullable: false})
+  author: string
+
+  @Column('text', {nullable: false})
   text
 
   @ManyToOne(_ => User, user => user.comments)

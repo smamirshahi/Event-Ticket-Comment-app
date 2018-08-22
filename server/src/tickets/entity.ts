@@ -22,15 +22,15 @@ export class Ticket extends BaseEntity {
   // eventNumber
   
   @Column('text', {nullable: false})
-  name
+  author: string
   
   @Column('text', {nullable: true})
   picture
 
-  @Column('int', {nullable: true})
+  @Column('int', {nullable: false})
   price
   
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   description
 
   @Column('int', {nullable: true})

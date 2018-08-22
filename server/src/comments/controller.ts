@@ -34,8 +34,10 @@ import {
     ) {
     //   const event = await Event.findOneById(eventId)
       const ticket = await Ticket.findOneById(ticketId)
+      const author = user.firstName.concat(` ${user.lastName}`)
   
       const comment1 = await Comment.create({
+        author: author,
         text: entity.text,
         user,
         ticket

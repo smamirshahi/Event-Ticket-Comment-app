@@ -34,7 +34,7 @@ class TicketsList extends PureComponent {
         return (<Card key={ticket.id} className="ticket-card">
             <CardContent>
                 <Typography variant="headline" component="h2">
-                    {ticket.name}
+                    Created by: {ticket.author}
                 </Typography>
                 <CardMedia
                     className="ticket-media"

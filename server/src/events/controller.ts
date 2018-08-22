@@ -29,8 +29,10 @@ export default class GameController {
     @Body() entity: Event
   ) {
     // const event1 = await Event.create().save()
+    const author = user.firstName.concat(` ${user.lastName}`)
 
     const event1 = await Event.create({
+      author: author,
       title: entity.title,
       description: entity.description,
       picture: entity.picture,
