@@ -16,19 +16,19 @@ export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   title
 
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   description
 
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   picture
 
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   start
 
-  @Column('text', {nullable: true})
+  @Column('text', {nullable: false})
   end
 
   @ManyToOne(_ => User, user => user.events)

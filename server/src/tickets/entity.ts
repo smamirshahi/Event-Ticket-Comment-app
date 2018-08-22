@@ -18,6 +18,9 @@ export class Ticket extends BaseEntity {
   id?: number
   
   @Column('text', {nullable: true})
+  name
+  
+  @Column('text', {nullable: true})
   picture
 
   @Column('int', {nullable: false})

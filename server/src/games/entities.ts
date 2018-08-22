@@ -1,5 +1,5 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
-import User from '../users/entity'
+// import User from '../users/entity'
 
 export type Symbol = 'x' | 'o'
 export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
