@@ -1,5 +1,5 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity/* , ManyToOne */ } from 'typeorm'
-// import User from '../users/entity'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm'
+import User from '../users/entity'
 
 // export type Symbol = 'x' | 'o'
 // export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
@@ -31,8 +31,8 @@ export class Event extends BaseEntity {
   @Column('text', {nullable: false})
   end
 
-  // @ManyToOne(_ => User, user => user.events)
-  // user: User
+  @ManyToOne(_ => User, user => user.events)
+  user: User
 
   // @OneToMany(_ => Ticket, ticket => ticket.event, {eager:true}) 
   // tickets: Ticket[]

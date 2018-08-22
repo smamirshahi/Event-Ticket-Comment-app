@@ -1,8 +1,8 @@
 import { 
-  JsonController, Authorized/* , CurrentUser */, Post, Param/* , BadRequestError */, HttpCode/* , NotFoundError, ForbiddenError */, Get, 
-  Body/* , Patch */ 
+  JsonController, Authorized, CurrentUser, Post, Param/* , BadRequestError */, HttpCode/* , NotFoundError, ForbiddenError */, Get, 
+  Body,/* , Patch */ 
 } from 'routing-controllers'
-// import User from '../users/entity'
+import User from '../users/entity'
 // import { Game, Player, Board } from './entities'
 import { Event } from './entity'
 // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
@@ -25,28 +25,28 @@ export default class GameController {
   @Post('/events')
   @HttpCode(201)
   async createEvent(
-    @Body() data: Event
+    @CurrentUser() user: User,
+    @Body() entity: Event
   ) {
-  // async createGame(
-  // async createEvent(
-  //   @CurrentUser() user: User
-  // ) {
-    const entity = await data.save()
+    // const entity = await event1.save()
 
-    // await Event.create({
-    //   event: entity, 
-    //   user,
-    //   symbol: 'x'
-    // }).save()
+    const event1 = await Event.create({
+      title: entity.title,
+      description: entity.description,
+      picture: entity.picture,
+      start: entity.start,
+      end: entity.end,
+      user,
+    }).save()
 
     // const event = await Event.findOneById(entity.id)
 
     io.emit('action', {
       type: 'ADD_EVENT',
-      payload: entity
+      payload: event1
     })
 
-    return entity
+    return event1
   }
 
   // @Authorized()

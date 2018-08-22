@@ -66,8 +66,8 @@ class EventsList extends PureComponent {
         //     <Redirect to="/login" />
         // )
 
-        // if (events === null || users === null) return null
-        if ( events === null ) return null
+        if (events === null && users === null) return null
+        // if ( events === null ) return null
 
         return (<Paper className="outer-paper">
             <div>
