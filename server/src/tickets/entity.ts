@@ -1,6 +1,6 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity/* , ManyToOne */ } from 'typeorm'
-// import User from '../users/entity'
-// import Event from '../events/entity'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm'
+import User from '../users/entity'
+import { Event } from '../events/entity'
 
 // export type Symbol = 'x' | 'o'
 // export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
@@ -17,29 +17,32 @@ export class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
   
-  @Column('text', {nullable: true})
+  @Column('int', {nullable: true})
+  eventNumber
+  
+  @Column('text', {nullable: false})
   name
   
   @Column('text', {nullable: true})
   picture
 
-  @Column('int', {nullable: false})
+  @Column('int', {nullable: true})
   price
   
-  @Column('text', {nullable: false})
+  @Column('text', {nullable: true})
   description
 
-  @Column('int', {nullable: false})
+  @Column('int', {nullable: true})
   risk
   
-  @Column('text', {nullable: false})
+  @Column('text', {nullable: true})
   timeAdded
 
-  // @ManyToOne(_ => User, user => user.tickets)
-  // user: User
+  @ManyToOne(_ => User, user => user.tickets)
+  user: User
 
-  // @ManyToOne(_ => Event, event => event.tickets)
-  // event: Event
+  @ManyToOne(_ => Event, event => event.tickets)
+  event: Event
 
   // @OneToMany(_ => Comment, comment => comment.ticket, {eager:true}) 
   // comments: Comment[]

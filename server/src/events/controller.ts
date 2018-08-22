@@ -28,7 +28,7 @@ export default class GameController {
     @CurrentUser() user: User,
     @Body() entity: Event
   ) {
-    // const entity = await event1.save()
+    // const event1 = await Event.create().save()
 
     const event1 = await Event.create({
       title: entity.title,
@@ -39,14 +39,14 @@ export default class GameController {
       user,
     }).save()
 
-    // const event = await Event.findOneById(entity.id)
+    const event = await Event.findOneById(event1.id)
 
     io.emit('action', {
       type: 'ADD_EVENT',
-      payload: event1
+      payload: event
     })
 
-    return event1
+    return event
   }
 
   // @Authorized()
@@ -130,9 +130,11 @@ export default class GameController {
     return Event.findOneById(id)
   }
 
-  // @Authorized()
+  @Authorized()
   @Get('/events')
-  getGames() {
+  async getGames() {
+    const allEvent = await Event.find()
+    console.log(allEvent)
     return Event.find()
   }
 }
