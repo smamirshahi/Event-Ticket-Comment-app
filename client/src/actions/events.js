@@ -28,16 +28,16 @@ const addEvent = event => ({
 // })
 
 
-export const getEvents = () => (dispatch, getState) => {
-  const state = getState()
-  if (!state.currentUser) return null
-  const jwt = state.currentUser.jwt
+export const getEvents = () => (dispatch/* , getState */) => {
+  // const state = getState()
+  // if (!state.currentUser) return null
+  // const jwt = state.currentUser.jwt
 
-  if (isExpired(jwt)) return dispatch(logout())
+  // if (isExpired(jwt)) return dispatch(logout())
 
   request
     .get(`${baseUrl}/events`)
-    .set('Authorization', `Bearer ${jwt}`)
+    // .set('Authorization', `Bearer ${jwt}`)
     .then(result => dispatch(updateEvents(result.body)))
     .catch(err => console.error(err))
 }

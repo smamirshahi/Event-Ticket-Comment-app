@@ -130,7 +130,7 @@ export default class GameController {
     return Event.findOneById(id)
   }
 
-  @Authorized()
+  // @Authorized()
   @Get('/events')
   getGames() {
     return Event.find()

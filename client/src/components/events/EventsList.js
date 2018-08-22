@@ -3,7 +3,7 @@ import { getEvents, createEvent } from '../../actions/events'
 import { getUsers } from '../../actions/users'
 import CreateEvent from './CreateEvent'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -12,9 +12,10 @@ import './EventsList.css'
 
 class EventsList extends PureComponent {
     componentWillMount() {
+        if (this.props.events === null) this.props.getEvents()
         if (this.props.authenticated) {
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together
-            if (this.props.events === null) this.props.getEvents()
+            
             if (this.props.users === null) this.props.getUsers()
         }
     }
@@ -25,8 +26,8 @@ class EventsList extends PureComponent {
 	}
 
     renderEvent = (event) => {
-        const { users, history } = this.props
-        console.log("history", history)
+        const { /* users,  */history } = this.props
+        // console.log("history", history)
 
         return (<Card key={event.id} className="event-card">
             <CardContent>
@@ -59,24 +60,30 @@ class EventsList extends PureComponent {
     }
 
     render() {
-        const { events, users, authenticated, createEvent } = this.props
+        const { events, users/* , authenticated, createEvent */ } = this.props
 
-        if (!authenticated) return (
-            <Redirect to="/login" />
-        )
+        // if (!authenticated) return (
+        //     <Redirect to="/login" />
+        // )
 
-        if (events === null || users === null) return null
+        // if (events === null || users === null) return null
+        if ( events === null ) return null
 
         return (<Paper className="outer-paper">
             <div>
                 {events.map(event => this.renderEvent(event))}
             </div>
-            
+
             <h2>Create A New Event</h2>
 
-            <CreateEvent onSubmit={this.handleSubmit} />
+            {!this.props.authenticated && <p>You need to login to create an event</p>}
 
-            <Button disabled={!this.props.authenticated}
+            {this.props.authenticated && <div>            
+
+            <CreateEvent onSubmit={this.handleSubmit} />
+            </div>}
+
+            {/* <Button disabled={!this.props.authenticated}
                 color="primary"
                 variant="raised"
                 // onClick={createEvent}
@@ -84,7 +91,7 @@ class EventsList extends PureComponent {
                 className="create-event"
             >
                 Create A New Event
-      </Button>
+      </Button> */}
         </Paper>)
     }
 }
