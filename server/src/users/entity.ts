@@ -2,8 +2,8 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 't
 import { Exclude } from 'class-transformer';
 import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
-import { Player } from '../games/entities';
-// import { Event } from '../events/entity'
+// import { Player } from '../games/entities';
+import { Event } from '../events/entity'
 // import { Ticket } from '../tickets/entity'
 // import { Comment } from '../comments/entity'
 
@@ -42,13 +42,13 @@ export default class User extends BaseEntity {
     return bcrypt.compare(rawPassword, this.password)
   }
 
-  @OneToMany(_ => Player, player => player.user) 
-  players: Player[]
+  // @OneToMany(_ => Player, player => player.user) 
+  // players: Player[]
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
-  // @OneToMany(_ => Event, event => event.user, {eager:true}) 
-  // events: Event[]
+  @OneToMany(_ => Event, event => event.user, {eager:true}) 
+  events: Event[]
 
   // @OneToMany(_ => Ticket, ticket => ticket.user, {eager:true}) 
   // tickets: Ticket[]
