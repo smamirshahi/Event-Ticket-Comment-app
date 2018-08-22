@@ -55,6 +55,7 @@ export const getEvents = () => (dispatch, getState) => {
 //     .catch(err => console.error(err))
 // }
 
+
 export const createEvent = (title, description, picture, start, end) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt

@@ -51,7 +51,7 @@ class EventsList extends PureComponent {
             <CardActions>
                 <Button
                     size="small"
-                    onClick={() => history.push(`/events/${event.id}`)}
+                    onClick={() => history.push(`/events/${event.id}/tickets`)}
                 >
                     Buy Tickets
         </Button>

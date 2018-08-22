@@ -134,8 +134,9 @@ export default class GameController {
   @Get('/events')
   async getGames() {
     const allEvent = await Event.find()
-    console.log(allEvent)
-    return Event.find()
+    // console.log("the get method is called")
+    return allEvent
+    // return Event.find()
   }
 }
 

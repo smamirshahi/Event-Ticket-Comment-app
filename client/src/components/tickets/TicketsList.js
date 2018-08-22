@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react'
 import { getTickets, createTicket } from '../../actions/tickets'
+import { getEvents } from '../../actions/events'
 import { getUsers } from '../../actions/users'
 import CreateTicket from './CreateTicket'
 import { connect } from 'react-redux'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -12,17 +13,18 @@ import './TicketsList.css'
 
 class TicketsList extends PureComponent {
     componentWillMount() {
-        if (this.props.tickets === null) this.props.getTickets(1)
+        
         if (this.props.authenticated) {
-            // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together
-            
+            if (this.props.events === null) this.props.getEvents()
+            if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id)
+            // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
         }
     }
 
     handleSubmit = (data) => {
         // this.props.history.push(`/events/${event.id}`)
-		this.props.createTicket(data.name, data.picture, data.price, data.description, 1)
+		this.props.createTicket(data.name, data.picture, data.price, data.description, this.props.match.params.id)
 	}
 
     renderTicket = (ticket) => {
@@ -51,7 +53,7 @@ class TicketsList extends PureComponent {
             <CardActions>
                 <Button
                     size="small"
-                    onClick={() => history.push(`/events/${ticket.eventNumber}/${ticket.id}`)}
+                    onClick={() => history.push(`/events/${this.props.match.params.id}/${ticket.id}`)}
                 >
                     More Details for the ticket
         </Button>
@@ -60,11 +62,13 @@ class TicketsList extends PureComponent {
     }
 
     render() {
-        const { tickets, users/* , authenticated, createEvent */ } = this.props
+        const { tickets, users, authenticated/* , createEvent */ } = this.props
 
-        // if (!authenticated) return (
-        //     <Redirect to="/login" />
-        // )
+        // console.log("tickets",this.props.tickets)
+
+        if (!authenticated) return (
+            <Redirect to="/login" />
+        )
 
         if (tickets === null && users === null) return null
         // if ( tickets === null ) return null
@@ -96,15 +100,15 @@ class TicketsList extends PureComponent {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
     authenticated: state.currentUser !== null,
-    users: state.users === null ? null : state.users,
-    tickets: state.tickets === null ?
-        null : Object.values(state.tickets).sort((a, b) => b.id - a.id)
+    events: state.events,
+    users: state.users,
+    tickets: state.events && state.events[props.match.params.id].tickets
 })
 
 const mapDispatchToProps = {
-    getTickets, getUsers, createTicket
+    getEvents, getUsers, getTickets, createTicket
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TicketsList)
+export default connect( mapStateToProps, mapDispatchToProps )(TicketsList)

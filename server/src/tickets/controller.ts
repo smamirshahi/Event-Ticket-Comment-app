@@ -5,6 +5,7 @@ import {
   import User from '../users/entity'
   // import { Game, Player, Board } from './entities'
   import { Ticket } from './entity'
+  import { Event } from '../events/entity'
   // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
   // import { Validate } from 'class-validator'
   import {io} from '../index'
@@ -22,15 +23,14 @@ import {
   
     @Authorized()
     // @Post('/games')
-    @Post('/events/:id')
+    @Post('/events/:id([0-9]+)/tickets')
     @HttpCode(201)
     async createEvent(
       @CurrentUser() user: User,
       @Param('id') eventId: number,
       @Body() entity: Ticket
     ) {
-      // const entity = await event1.save()
-    //   const id = Number(eventId)
+      const event = await Event.findOneById(eventId)
   
       const ticket1 = await Ticket.create({
         name: entity.name,
@@ -40,18 +40,17 @@ import {
         risk: entity.risk,
         timeAdded: entity.timeAdded,
         user,
-      })
-      ticket1.eventNumber = eventId;
-      await ticket1.save()
-  
-      // const event = await Event.findOneById(entity.id)
-  
+        event
+      }).save()
+
+      const ticket = await Ticket.findOneById(ticket1.id)
+
       io.emit('action', {
         type: 'ADD_TICKET',
-        payload: ticket1
+        payload: ticket
       })
-  
-      return ticket1
+
+      return ticket
     }
   
     // @Authorized()
@@ -136,10 +135,12 @@ import {
     // }
   
     // @Authorized()
-    @Get('/events/:id([0-9]+)')
-    getGames() {
-        console.log("the get is called")
-      return Ticket.find()
+    @Get('/events/:id([0-9]+)/tickets')
+    getTickets(
+      @Param('id') id: number
+    ) {
+      console.log("the /events/:id([0-9]+) with get request is called in ticket controller")
+      return Ticket.find({where: { event_id: id}}) // find tickets with event_id equal to id
     }
   }
   

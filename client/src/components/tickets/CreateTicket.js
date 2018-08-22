@@ -27,7 +27,7 @@ export default class CreateTicket extends PureComponent {
 					<label>
 						Name
             <input type="text" name="name" value={
-							this.state.title || ''
+							this.state.name || ''
 						} onChange={this.handleChange} />
 					</label>
 
@@ -41,7 +41,7 @@ export default class CreateTicket extends PureComponent {
                     <label>
 						Price
   					<input type="number" name="price" value={
-							this.state.start || ''
+							this.state.price || ''
 						} onChange={this.handleChange} />
 					</label>
 
