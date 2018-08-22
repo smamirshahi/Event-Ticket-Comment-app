@@ -3,7 +3,7 @@ import { getEvents, createEvent } from '../../actions/events'
 import { getUsers } from '../../actions/users'
 import CreateEvent from './CreateEvent'
 import { connect } from 'react-redux'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -12,10 +12,10 @@ import './EventsList.css'
 
 class EventsList extends PureComponent {
     componentWillMount() {
-        if (this.props.events === null) this.props.getEvents()
+        
         if (this.props.authenticated) {
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together
-            
+            if (this.props.events === null) this.props.getEvents()    
             if (this.props.users === null) this.props.getUsers()
         }
     }
@@ -51,7 +51,7 @@ class EventsList extends PureComponent {
             <CardActions>
                 <Button
                     size="small"
-                    onClick={() => history.push(`/events/${event.id}`)}
+                    onClick={() => history.push(`/events/${event.id}/tickets`)}
                 >
                     Buy Tickets
         </Button>
@@ -60,11 +60,11 @@ class EventsList extends PureComponent {
     }
 
     render() {
-        const { events, users/* , authenticated, createEvent */ } = this.props
+        const { events, users, authenticated/* , createEvent */ } = this.props
 
-        // if (!authenticated) return (
-        //     <Redirect to="/login" />
-        // )
+        if (!authenticated) return (
+            <Redirect to="/login" />
+        )
 
         if (events === null && users === null) return null
         // if ( events === null ) return null

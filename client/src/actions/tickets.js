@@ -1,22 +1,22 @@
 import * as request from 'superagent'
-import {baseUrl} from '../constants'
-import {logout} from './users'
-import {isExpired} from '../jwt'
+import { baseUrl } from '../constants'
+import { logout } from './users'
+import { isExpired } from '../jwt'
 
-export const ADD_EVENT = 'ADD_EVENT'
-export const UPDATE_EVENT = 'UPDATE_EVENT'
-export const UPDATE_EVENTS = 'UPDATE_EVENTS'
+export const ADD_TICKET = 'ADD_TICKET'
+export const UPDATE_TICKET = 'UPDATE_TICKET'
+export const UPDATE_TICKETS = 'UPDATE_TICKETS'
 // export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
 // export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
 
-const updateEvents = events => ({
-  type: UPDATE_EVENTS,
-  payload: events
+const updateTickets = tickets => ({
+  type: UPDATE_TICKETS,
+  payload: tickets
 })
 
-const addEvent = event => ({
-  type: ADD_EVENT,
-  payload: event
+const addTicket = ticket => ({
+  type: ADD_TICKET,
+  payload: ticket
 })
 
 // const updateGameSuccess = () => ({
@@ -28,17 +28,18 @@ const addEvent = event => ({
 // })
 
 
-export const getEvents = () => (dispatch, getState) => {
+export const getTickets = (eventId) => (dispatch, getState) => {
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt
+  // console.log("get tickets in actions is called")
 
   if (isExpired(jwt)) return dispatch(logout())
 
   request
-    .get(`${baseUrl}/events`)
+    .get(`${baseUrl}/events/${eventId}/tickets`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(result => dispatch(updateEvents(result.body)))
+    .then(result => dispatch(updateTickets(result.body)))
     .catch(err => console.error(err))
 }
 
@@ -55,18 +56,17 @@ export const getEvents = () => (dispatch, getState) => {
 //     .catch(err => console.error(err))
 // }
 
-
-export const createEvent = (title, description, picture, start, end) => (dispatch, getState) => {
+export const createTicket = (name, picture, price, description, eventId) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt
 
   if (isExpired(jwt)) return dispatch(logout())
-
+  // console.log(eventId)
   request
-    .post(`${baseUrl}/events`)
+    .post(`${baseUrl}/events/${eventId}/tickets`)
     .set('Authorization', `Bearer ${jwt}`)
-    .send({ title, description, picture, start, end })
-    .then(result => dispatch(addEvent(result.body)))
+    .send({ name, picture, price, description })
+    .then(result => dispatch(addTicket(result.body)))
     .catch(err => console.error(err))
 }
 
