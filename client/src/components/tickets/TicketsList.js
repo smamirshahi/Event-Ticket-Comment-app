@@ -16,15 +16,15 @@ class TicketsList extends PureComponent {
         
         if (this.props.authenticated) {
             if (this.props.events === null) this.props.getEvents()
-            if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id)
+            if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
         }
     }
 
     handleSubmit = (data) => {
-        // this.props.history.push(`/events/${event.id}`)
-		this.props.createTicket(data.name, data.picture, data.price, data.description, this.props.match.params.id)
+        // this.props.history.push(`/events/${event.id1}`)
+		this.props.createTicket(data.name, data.picture, data.price, data.description, this.props.match.params.id1)
 	}
 
     renderTicket = (ticket) => {
@@ -53,7 +53,7 @@ class TicketsList extends PureComponent {
             <CardActions>
                 <Button
                     size="small"
-                    onClick={() => history.push(`/events/${this.props.match.params.id}/${ticket.id}`)}
+                    onClick={() => history.push(`/events/${this.props.match.params.id1}/tickets/${ticket.id}`)}
                 >
                     More Details for the ticket
         </Button>
@@ -102,9 +102,9 @@ class TicketsList extends PureComponent {
 
 const mapStateToProps = (state, props) => ({
     authenticated: state.currentUser !== null,
+    users: state.users === null ? null : state.users,
     events: state.events,
-    users: state.users,
-    tickets: state.events && state.events[props.match.params.id].tickets
+    tickets: state.events && state.events[props.match.params.id1].tickets
 })
 
 const mapDispatchToProps = {

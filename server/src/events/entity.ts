@@ -35,6 +35,10 @@ export class Event extends BaseEntity {
   @ManyToOne(_ => User, user => user.events)
   user: User
 
+  // @OneToMany(_ => Ticket, ticket => ticket.event) 
+  // tickets: Ticket[]
+
+
   @OneToMany(_ => Ticket, ticket => ticket.event, {eager:true}) 
   tickets: Ticket[]
 }

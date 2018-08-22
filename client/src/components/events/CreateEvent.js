@@ -11,9 +11,10 @@ export default class CreateEvent extends PureComponent {
 
 	handleChange = (event) => {
 		const { name, value } = event.target
+		
 
 		this.setState({
-			[name]: value
+			[name]: value,
 		})
 	}
 
@@ -54,7 +55,7 @@ export default class CreateEvent extends PureComponent {
 
 					<label>
 						End
-  					<input type="date" name="end" value={
+  					<input type="date" min={this.state.start} name="end" value={
 							this.state.end || ''
 						} onChange={this.handleChange} />
 					</label>

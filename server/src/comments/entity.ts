@@ -1,6 +1,6 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity/* , ManyToOne */ } from 'typeorm'
-// import User from '../users/entity'
-// import Ticket from '../tickets/entity'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm'
+import User from '../users/entity'
+import { Ticket } from '../tickets/entity'
 
 // export type Symbol = 'x' | 'o'
 // export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
@@ -20,9 +20,9 @@ export class Comment extends BaseEntity {
   @Column('text', {nullable: false})
   text
 
-  // @ManyToOne(_ => User, user => user.comments)
-  // user: User
+  @ManyToOne(_ => User, user => user.comments)
+  user: User
 
-  // @ManyToOne(_ => Ticket, ticket => ticket.comments)
-  // ticket: Ticket
+  @ManyToOne(_ => Ticket, ticket => ticket.comments)
+  ticket: Ticket
 }
