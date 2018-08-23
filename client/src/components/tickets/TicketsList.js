@@ -13,10 +13,10 @@ import './TicketsList.css'
 
 class TicketsList extends PureComponent {
     componentWillMount() {
-        
+
         if (this.props.authenticated) {
-            if (this.props.events === null) this.props.getEvents()
-            if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
+            if (this.props.event === null) this.props.getEvents()
+            // if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
         }
@@ -24,8 +24,8 @@ class TicketsList extends PureComponent {
 
     handleSubmit = (data) => {
         // this.props.history.push(`/events/${event.id1}`)
-		this.props.createTicket(data.picture, data.price, data.description, this.props.match.params.id1)
-	}
+        this.props.createTicket(data.picture, data.price, data.description, this.props.match.params.id1)
+    }
 
     renderTicket = (ticket) => {
         const { /* users,  */history } = this.props
@@ -62,29 +62,28 @@ class TicketsList extends PureComponent {
     }
 
     render() {
-        const { tickets, users, authenticated/* , createEvent */ } = this.props
-
+        const { event, /* tickets,  */users, authenticated/* , createEvent */ } = this.props
         // console.log("tickets",this.props.tickets)
-
         if (!authenticated) return (
             <Redirect to="/login" />
         )
 
-        if (tickets === null && users === null) return null
+        if (event === null && users === null) return 'Loading ...'
         // if ( tickets === null ) return null
 
         return (<Paper className="outer-paper">
+        <h1>Event: {event.title}</h1>
             <div>
-                {tickets.map(ticket => this.renderTicket(ticket))}
+                {event.tickets.map(ticket => this.renderTicket(ticket))}
             </div>
 
             <h2>Create A New Ticket</h2>
 
             {!this.props.authenticated && <p>You need to login to create a ticket</p>}
 
-            {this.props.authenticated && <div>            
+            {this.props.authenticated && <div>
 
-            <CreateTicket onSubmit={this.handleSubmit} />
+                <CreateTicket onSubmit={this.handleSubmit} />
             </div>}
 
             {/* <Button disabled={!this.props.authenticated}
@@ -103,12 +102,12 @@ class TicketsList extends PureComponent {
 const mapStateToProps = (state, props) => ({
     authenticated: state.currentUser !== null,
     users: state.users === null ? null : state.users,
-    events: state.events,
-    tickets: state.events && state.events[props.match.params.id1].tickets
+    event: state.events && state.events[props.match.params.id1],
+    // tickets: state.events && state.events[props.match.params.id1].tickets
 })
 
 const mapDispatchToProps = {
     getEvents, getUsers, getTickets, createTicket
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )(TicketsList)
+export default connect(mapStateToProps, mapDispatchToProps)(TicketsList)
