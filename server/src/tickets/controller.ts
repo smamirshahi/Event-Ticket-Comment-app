@@ -39,7 +39,7 @@ import {
         picture: entity.picture,
         price: entity.price,
         description: entity.description,
-        risk: entity.risk,
+        risk: 2,
         user,
         event
       }).save()
