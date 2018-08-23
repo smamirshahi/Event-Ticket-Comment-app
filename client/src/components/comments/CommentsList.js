@@ -5,10 +5,8 @@ import { getEvents } from '../../actions/events'
 import { getUsers } from '../../actions/users'
 import CreateComment from './CreateComment'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import Card, { /* CardActions, */ CardContent, /* CardMedia */ } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import './CommentsList.css'
 
@@ -16,7 +14,6 @@ class CommentsList extends PureComponent {
     componentWillMount() {
         if (this.props.event === null) this.props.getEvents()
         if (this.props.authenticated) {
-            
             // if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
@@ -24,18 +21,11 @@ class CommentsList extends PureComponent {
     }
 
     handleSubmit = (data) => {
-        // this.props.history.push(`/events/${event.id1}`)
         this.props.createComment(data.text, this.props.match.params.id1, this.props.match.params.id2)
     }
 
-    // updateTheTicket = () => {
-    //     this.getComments(this.props.match.params.id1, this.props.match.params.id2)
-    // }
-
     renderComment = (comment) => {
-        const { /* users,  */history } = this.props
-        // console.log("history", history)
-
+        // const { /* users,  *//* history */ } = this.props
         return (<Card key={comment.id} className="ticket-card">
             <CardContent>
                 <Typography variant="subheading" component="h2">
@@ -60,28 +50,18 @@ class CommentsList extends PureComponent {
 
 
     render() {
-        const { event, /* tickets,  */users, authenticated/* , createEvent */ } = this.props
+        const { event, /* tickets,  */users, /* authenticated *//* , createEvent */ } = this.props
         // console.log("tickets",this.props.tickets)
         // if (!authenticated) return (
         //     <Redirect to="/login" />
         // )
 
         if (event === null && users === null) return 'Loading ...'
-        // if ( tickets === null ) return null
-        // this.props.getTicketRisk(this.props.match.params.id1, this.props.match.params.id2)
-
         let allTickets
         let ticketIndex
-
         allTickets = event.tickets
-        // console.log(allTickets)
-
-        { ticketIndex = allTickets.findIndex(this.thisTicket) }
-        // {console.log(event.tickets[ticketIndex].id)}
-        // {console.log(event.tickets[0].id)}
-
+        ticketIndex = allTickets.findIndex(this.thisTicket)
         let currentTicket = event.tickets[ticketIndex]
-
         let riskClass
         if ((currentTicket.risk > 70)) {
             riskClass = "risky"
@@ -117,16 +97,6 @@ class CommentsList extends PureComponent {
 
                 <CreateComment onSubmit={this.handleSubmit} />
             </div>}
-
-            {/* <Button disabled={!this.props.authenticated}
-                color="primary"
-                variant="raised"
-                // onClick={createEvent}
-                onClick={() => <CreateEvent />}
-                className="create-event"
-            >
-                Create A New Event
-      </Button> */}
         </Paper>)
     }
 }

@@ -19,11 +19,6 @@ export default class CreateComment extends PureComponent {
 	}
 
 	render() {
-		console.log(this.state.text)
-		console.log(this.state)
-		// let n =  new Date();
-		// let currentDate = `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`
-		// let currentDate = new Date().toISOString().split("T")[0];
 		return (
 			<div className="signup-form">
 				<form onSubmit={this.handleSubmit}>
@@ -34,7 +29,7 @@ export default class CreateComment extends PureComponent {
 						} onChange={this.handleChange} />
 					</label>
 
-                    <button type="submit">Add Comment</button>
+					<button type="submit">Add Comment</button>
 				</form>
 			</div>
 		)
