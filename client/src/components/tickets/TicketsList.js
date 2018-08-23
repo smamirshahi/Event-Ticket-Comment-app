@@ -13,9 +13,9 @@ import './TicketsList.css'
 
 class TicketsList extends PureComponent {
     componentWillMount() {
-
+        if (this.props.event === null) this.props.getEvents()
         if (this.props.authenticated) {
-            if (this.props.event === null) this.props.getEvents()
+            
             // if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
@@ -70,9 +70,9 @@ class TicketsList extends PureComponent {
     render() {
         const { event, /* tickets,  */users, authenticated/* , createEvent */ } = this.props
         // console.log("tickets",this.props.tickets)
-        if (!authenticated) return (
-            <Redirect to="/login" />
-        )
+        // if (!authenticated) return (
+        //     <Redirect to="/login" />
+        // )
 
         if (event === null && users === null) return 'Loading ...'
         // if ( tickets === null ) return null
@@ -80,7 +80,8 @@ class TicketsList extends PureComponent {
         return (<Paper className="outer-paper">
         <h1>Event: {event.title}</h1>
             <div>
-                {event.tickets.map(ticket => this.renderTicket(ticket))}
+                {Object.values(event.tickets).sort((a, b) => b.id - a.id).map(ticket => this.renderTicket(ticket))}
+                {/* {event.tickets.map(ticket => this.renderTicket(ticket))} */}
             </div>
 
             <h2>Create A New Ticket</h2>

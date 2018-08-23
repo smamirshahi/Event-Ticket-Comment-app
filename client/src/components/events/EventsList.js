@@ -12,10 +12,11 @@ import './EventsList.css'
 
 class EventsList extends PureComponent {
     componentWillMount() {
-        
+        if (this.props.events === null) this.props.getEvents() 
         if (this.props.authenticated) {
+            if (this.props.events === null) this.props.getEvents() 
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together
-            if (this.props.events === null) this.props.getEvents()    
+               
             if (this.props.users === null) this.props.getUsers()
         }
     }
@@ -56,7 +57,7 @@ class EventsList extends PureComponent {
                     size="small"
                     onClick={() => history.push(`/events/${event.id}/tickets`)}
                 >
-                    Buy Tickets
+                    See Tickets
         </Button>
             </CardActions>
         </Card>)
@@ -65,12 +66,12 @@ class EventsList extends PureComponent {
     render() {
         const { events, users, authenticated/* , createEvent */ } = this.props
         let n = new Date();        
-        if (!authenticated) return (
-            <Redirect to="/login" />
-        )
+        // if (!authenticated) return (
+        //     <Redirect to="/login" />
+        // )
 
-        if (events === null && users === null) return null
-        // if ( events === null ) return null
+        if (events === null && users === null) return "...Loading"
+        // if ( events === null ) return "...Loading"
 
         return (<Paper className="outer-paper">
             <div>

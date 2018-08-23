@@ -7,6 +7,7 @@ export default class CreateComment extends PureComponent {
 	handleSubmit = (e) => {
 		e.preventDefault()
 		this.props.onSubmit(this.state)
+		this.setState({})
 	}
 
 	handleChange = (comment) => {
@@ -18,6 +19,8 @@ export default class CreateComment extends PureComponent {
 	}
 
 	render() {
+		console.log(this.state.text)
+		console.log(this.state)
 		// let n =  new Date();
 		// let currentDate = `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`
 		// let currentDate = new Date().toISOString().split("T")[0];

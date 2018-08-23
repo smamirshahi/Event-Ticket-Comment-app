@@ -14,8 +14,9 @@ import './CommentsList.css'
 
 class CommentsList extends PureComponent {
     componentWillMount() {
+        if (this.props.event === null) this.props.getEvents()
         if (this.props.authenticated) {
-            if (this.props.event === null) this.props.getEvents()
+            
             // if (this.props.tickets === null) this.props.getTickets(this.props.match.params.id1)
             // read data from server. componentWillMount only runs one time. It reads the current database and copy it to the React state. After that, any changes in the database will update in react and database together            
             if (this.props.users === null) this.props.getUsers()
@@ -38,7 +39,7 @@ class CommentsList extends PureComponent {
         return (<Card key={comment.id} className="ticket-card">
             <CardContent>
                 <Typography variant="subheading" component="h2">
-                    Commented by: {comment.author}
+                    <p className="commentAuthor">{comment.author}:</p>
                 </Typography>
                 <Typography component="p">
                     {comment.text}
@@ -61,9 +62,9 @@ class CommentsList extends PureComponent {
     render() {
         const { event, /* tickets,  */users, authenticated/* , createEvent */ } = this.props
         // console.log("tickets",this.props.tickets)
-        if (!authenticated) return (
-            <Redirect to="/login" />
-        )
+        // if (!authenticated) return (
+        //     <Redirect to="/login" />
+        // )
 
         if (event === null && users === null) return 'Loading ...'
         // if ( tickets === null ) return null
@@ -93,15 +94,19 @@ class CommentsList extends PureComponent {
 
         return (<Paper className="outer-paper">
             {this.props.getComments(this.props.match.params.id1, this.props.match.params.id2)}
-            <h1>Ticket Details: Publisher {currentTicket.author}</h1>
+            <h1>Event Name: {event.title} </h1>
+            <h2>Publisher {currentTicket.author}</h2>
             <h2 className={riskClass}>Risk: {currentTicket.risk} %</h2>
-            <h3>Ticket Picture: {currentTicket.picture}</h3>
+            <img src={currentTicket.picture} alt={"ticketPicture"}></img>
             <h3>Price: {currentTicket.price}</h3>
             <h3>Description: {currentTicket.description}</h3>
 
+            {/* {console.log("current user", this.props.currentUser)}
+            {console.log("all users", this.props.users)} */}
 
             <div>
-                {currentTicket.comments.map(comment => this.renderComment(comment))}
+                {Object.values(currentTicket.comments).sort((a, b) => b.id - a.id).map(comment => this.renderComment(comment))}
+                {/* {currentTicket.comments.map(comment => this.renderComment(comment))} */}
             </div>
 
             <h2>Create A New Comment</h2>
@@ -129,6 +134,7 @@ class CommentsList extends PureComponent {
 const mapStateToProps = (state, props) => ({
     authenticated: state.currentUser !== null,
     users: state.users === null ? null : state.users,
+    // currentUser: state.currentUser,
     event: state.events && state.events[props.match.params.id1],
     // tickets: state.events && state.events[props.match.params.id1].tickets
 })

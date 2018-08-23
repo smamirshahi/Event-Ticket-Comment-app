@@ -132,7 +132,7 @@ export default class EventController {
     return Event.findOneById(id)
   }
 
-  @Authorized()
+  // @Authorized()
   @Get('/events')
   async getEvents() {
     const allEvent = await Event.find()

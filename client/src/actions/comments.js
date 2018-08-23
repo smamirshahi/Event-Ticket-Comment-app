@@ -29,16 +29,16 @@ const updateCommentSuccess = () => ({
 
 
 export const getComments = (eventId, ticketId) => (dispatch, getState) => {
-  const state = getState()
-  if (!state.currentUser) return null
-  const jwt = state.currentUser.jwt
+  // const state = getState()
+  // if (!state.currentUser) return null
+  // const jwt = state.currentUser.jwt
   // console.log("get tickets in actions is called")
 
-  if (isExpired(jwt)) return dispatch(logout())
+  // if (isExpired(jwt)) return dispatch(logout())
 
   request
     .get(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
-    .set('Authorization', `Bearer ${jwt}`)
+    // .set('Authorization', `Bearer ${jwt}`)
     .then(result => dispatch(updateCommentSuccess(result.body)))
     .catch(err => console.error(err))
 }
