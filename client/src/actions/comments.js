@@ -6,8 +6,8 @@ import { isExpired } from '../jwt'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
-// export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
-// export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+export const JOIN_COMMENT_SUCCESS = 'JOIN_COMMENT_SUCCESS'
+export const UPDATE_COMMENT_SUCCESS = 'UPDATE_COMMENT_SUCCESS'
 
 const updateComments = comments => ({
   type: UPDATE_COMMENTS,
@@ -19,12 +19,12 @@ const addComment = comment => ({
   payload: comment
 })
 
-// const updateGameSuccess = () => ({
-//   type: UPDATE_GAME_SUCCESS
-// })
+const updateCommentSuccess = () => ({
+  type: UPDATE_COMMENT_SUCCESS
+})
 
-// const joinGameSuccess = () => ({
-//   type: JOIN_GAME_SUCCESS
+// const joinCommentSuccess = () => ({
+//   type: JOIN_COMMENT_SUCCESS
 // })
 
 
@@ -66,7 +66,7 @@ export const createComment = (text, eventId, ticketId) => (dispatch, getState) =
     .post(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
     .set('Authorization', `Bearer ${jwt}`)
     .send({ text })
-    .then(result => dispatch(addComment(result.body)))
+    .then(result => dispatch(updateCommentSuccess(result.body)))
     .catch(err => console.error(err))
 }
 

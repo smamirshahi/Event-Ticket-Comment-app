@@ -10,7 +10,7 @@ import signup from './signup'
 export default {
   events,
   // tickets,
-  comments,
+  // comments,
   // games,
   users,
   login,

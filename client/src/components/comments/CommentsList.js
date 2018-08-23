@@ -34,7 +34,7 @@ class CommentsList extends PureComponent {
         return (<Card key={comment.id} className="ticket-card">
             <CardContent>
                 <Typography variant="subheading" component="h2">
-                    Comment by: {comment.author}
+                    Commented by: {comment.author}
                 </Typography>
                 <Typography component="p">
                     {comment.text}
@@ -46,7 +46,7 @@ class CommentsList extends PureComponent {
     thisTicket = (element, index, array) => {
         // console.log(element.id + 1)
         // console.log(this.props.match.params.id2 + 1)
-        if(element.id === Number(this.props.match.params.id2)) {
+        if (element.id === Number(this.props.match.params.id2)) {
             return element
         }
     }
@@ -63,7 +63,7 @@ class CommentsList extends PureComponent {
 
         if (event === null && users === null) return 'Loading ...'
         // if ( tickets === null ) return null
-        this.props.getTicketRisk(this.props.match.params.id1, this.props.match.params.id2)
+        // this.props.getTicketRisk(this.props.match.params.id1, this.props.match.params.id2)
 
         let allTickets
         let ticketIndex
@@ -71,7 +71,7 @@ class CommentsList extends PureComponent {
         allTickets = event.tickets
         // console.log(allTickets)
 
-        {ticketIndex = allTickets.findIndex(this.thisTicket)}
+        { ticketIndex = allTickets.findIndex(this.thisTicket) }
         // {console.log(event.tickets[ticketIndex].id)}
         // {console.log(event.tickets[0].id)}
 
@@ -88,25 +88,16 @@ class CommentsList extends PureComponent {
 
 
         return (<Paper className="outer-paper">
-        <h1>Ticket Details: Publisher {currentTicket.author}</h1>
-        <h2 className={riskClass}>Risk: {currentTicket.risk} %</h2>
-        <h3>Ticket Picture: {currentTicket.picture}</h3>
-        <h3>Price: {currentTicket.price}</h3>
-        <h3>Description: {currentTicket.description}</h3>
-        
-        
-        
-        
-        
+            <h1>Ticket Details: Publisher {currentTicket.author}</h1>
+            <h2 className={riskClass}>Risk: {currentTicket.risk} %</h2>
+            <h3>Ticket Picture: {currentTicket.picture}</h3>
+            <h3>Price: {currentTicket.price}</h3>
+            <h3>Description: {currentTicket.description}</h3>
 
 
-
-
-
-
-            {/* <div>
-                {event.tickets.map(ticket => this.renderTicket(ticket))}
-            </div> */}
+            <div>
+                {currentTicket.comments.map(comment => this.renderComment(comment))}
+            </div>
 
             <h2>Create A New Comment</h2>
 
