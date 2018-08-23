@@ -9,8 +9,8 @@ export default (state = null, { type, payload }) => {
       return null
 
     case ADD_EVENT:
-      console.log("Add event reducer-state", state)
-      console.log("Add event reducer-payload", payload)
+      // console.log("Add event reducer-state", state)
+      // console.log("Add event reducer-payload", payload)
       return {
         ...state,
         [payload.id]: payload
@@ -23,15 +23,12 @@ export default (state = null, { type, payload }) => {
       }
 
     case UPDATE_EVENTS:
-      console.log("update events reducer-state", state)
       return payload.reduce((events, event) => {
         events[event.id] = event
         return events
       }, {})
 
     case ADD_TICKET:
-      console.log("i am state", state)
-      console.log("i am payload", payload)
       return {
         ...state,
         [payload.id]: payload
@@ -50,8 +47,6 @@ export default (state = null, { type, payload }) => {
       }, {})
 
     case ADD_COMMENT:
-      console.log("i am state", state)
-      console.log("i am payload", payload)
       return {
         ...state,
         [payload.id]: payload
@@ -63,14 +58,10 @@ export default (state = null, { type, payload }) => {
         [payload.id]: payload
       }
 
-      
-
     case UPDATE_COMMENTS:
-    return {
-      ...state,
-    }
-
-
+      return {
+        ...state,
+      }
 
     default:
       return state

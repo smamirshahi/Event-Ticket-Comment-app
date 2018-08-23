@@ -18,21 +18,18 @@ export default class CreateTicket extends PureComponent {
 	}
 
 	render() {
-		// let n =  new Date();
-		// let currentDate = `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`
-		// let currentDate = new Date().toISOString().split("T")[0];
 		return (
 			<div className="signup-form">
 				<form onSubmit={this.handleSubmit}>
-					
-                    <label>
+
+					<label>
 						Picture
             <input type="text" name="picture" value={
 							this.state.picture || ''
 						} onChange={this.handleChange} />
 					</label>
 
-                    <label>
+					<label>
 						Price
   					<input type="number" name="price" value={
 							this.state.price || ''

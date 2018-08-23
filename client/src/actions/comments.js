@@ -6,27 +6,11 @@ import { isExpired } from '../jwt'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
-export const JOIN_COMMENT_SUCCESS = 'JOIN_COMMENT_SUCCESS'
 export const UPDATE_COMMENT_SUCCESS = 'UPDATE_COMMENT_SUCCESS'
-
-const updateComments = comments => ({
-  type: UPDATE_COMMENTS,
-  payload: comments
-})
-
-const addComment = comment => ({
-  type: ADD_COMMENT,
-  payload: comment
-})
 
 const updateCommentSuccess = () => ({
   type: UPDATE_COMMENT_SUCCESS
 })
-
-// const joinCommentSuccess = () => ({
-//   type: JOIN_COMMENT_SUCCESS
-// })
-
 
 export const getComments = (eventId, ticketId) => (dispatch, getState) => {
   // const state = getState()
@@ -43,19 +27,6 @@ export const getComments = (eventId, ticketId) => (dispatch, getState) => {
     .catch(err => console.error(err))
 }
 
-// export const joinGame = (gameId) => (dispatch, getState) => {
-//   const state = getState()
-//   const jwt = state.currentUser.jwt
-
-//   if (isExpired(jwt)) return dispatch(logout())
-
-//   request
-//     .post(`${baseUrl}/games/${gameId}/players`)
-//     .set('Authorization', `Bearer ${jwt}`)
-//     .then(_ => dispatch(joinGameSuccess()))
-//     .catch(err => console.error(err))
-// }
-
 export const createComment = (text, eventId, ticketId) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt
@@ -69,17 +40,3 @@ export const createComment = (text, eventId, ticketId) => (dispatch, getState) =
     .then(result => dispatch(updateCommentSuccess(result.body)))
     .catch(err => console.error(err))
 }
-
-// export const updateGame = (gameId, board) => (dispatch, getState) => {
-//   const state = getState()
-//   const jwt = state.currentUser.jwt
-
-//   if (isExpired(jwt)) return dispatch(logout())
-
-//   request
-//     .patch(`${baseUrl}/games/${gameId}`)
-//     .set('Authorization', `Bearer ${jwt}`)
-//     .send({ board })
-//     .then(_ => dispatch(updateGameSuccess()))
-//     .catch(err => console.error(err))
-// }

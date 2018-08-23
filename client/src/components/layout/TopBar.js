@@ -3,23 +3,23 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import {withRouter} from 'react-router'
-import {userId} from '../../jwt'
-import {connect} from 'react-redux'
+import { withRouter } from 'react-router'
+import { userId } from '../../jwt'
+import { connect } from 'react-redux'
 import AccountIcon from 'material-ui-icons/AccountBox'
 
 const TopBar = (props) => {
   const { location, history, user } = props
 
   return (
-    <AppBar position="absolute" style={{zIndex:10}}>
+    <AppBar position="absolute" style={{ zIndex: 10 }}>
       <Toolbar>
-        <Typography variant="title" color="inherit" style={{flex: 1}}>
+        <Typography variant="title" color="inherit" style={{ flex: 1 }}>
           EBAY-UBER!
         </Typography>
         {
           user &&
-          <Button color="inherit"><AccountIcon /> { user.firstName.concat(` ${user.lastName}`) }</Button>
+          <Button color="inherit"><AccountIcon /> {user.firstName.concat(` ${user.lastName}`)}</Button>
         }
 
         {
@@ -33,10 +33,6 @@ const TopBar = (props) => {
         {
           location.pathname.indexOf('events/') > 0 &&
           <Button color="inherit" onClick={() => history.push('/events')}>All Events</Button>
-        }
-        {
-          // location.pathname.indexOf('events/') > 0 &&
-          // <Button color="inherit" onClick={() => history.push('/events')}>All Events</Button>
         }
         {
           /events$/.test(location.pathname) &&
