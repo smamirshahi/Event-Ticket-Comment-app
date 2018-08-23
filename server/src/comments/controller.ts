@@ -5,7 +5,7 @@ import {
 import User from '../users/entity'
 // import { Game, Player, Board } from './entities'
 import { Comment } from './entity'
-  import { Event } from '../events/entity'
+import { Event } from '../events/entity'
 import { Ticket } from '../tickets/entity'
 // import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
 // import { Validate } from 'class-validator'
@@ -21,7 +21,7 @@ import { io } from '../index'
 // }
 
 @JsonController()
-export default class GameController {
+export default class CommentController {
 
   @Authorized()
   // @Post('/games')
@@ -29,7 +29,7 @@ export default class GameController {
   @HttpCode(201)
   async createTicket(
     @CurrentUser() user: User,
-    //   @Param('id1') eventId: number,
+    @Param('id1') eventId: number,
     @Param('id2') ticketId: number,
     @Body() entity: Comment
   ) {
@@ -44,13 +44,13 @@ export default class GameController {
       ticket
     }).save()
 
-    const comment = await Comment.findOneById(comment1.id)
+    // const comment = await Comment.findOneById(comment1.id)
 
     io.emit('action', {
       type: 'ADD_COMMENT',
-      payload: comment
+      payload: await Event.findOneById(eventId)
     })
-    return comment
+    return comment1
   }
 
   // @Authorized()
@@ -135,100 +135,100 @@ export default class GameController {
   // }
 
   // @Authorized()
-  @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
-  async getComments(
-    @Param('id1') eventId: number,
-    @Param('id2') ticketId: number,
-  ) {
-    let updatedRisk
-    let authourRisk
-    let totalRisk
-    let averageRisk
-    console.log("hello")
-    const currentTicket = await Ticket.findOneById(ticketId)
-    
-    const currentEvent = await Event.findOneById(eventId)
-    if (currentEvent !== undefined) {
-    // console.log(currentEvent.id)
-    }
+  // @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
+  // async getComments(
+  //   @Param('id1') eventId: number,
+  //   @Param('id2') ticketId: number,
+  // ) {
+  //   let updatedRisk
+  //   let authourRisk
+  //   let totalRisk
+  //   let averageRisk
+  //   console.log("hello")
+  //   const currentTicket = await Ticket.findOneById(ticketId)
 
-    // const manytickets = await Event.find({where: {id: eventId}/* , relations: ["currentTicket"] } */)
-    // console.log(`manytickets ${manytickets.length}`)
+  //   const currentEvent = await Event.findOneById(eventId)
+  //   if (currentEvent !== undefined) {
+  //   // console.log(currentEvent.id)
+  //   }
 
-    const eventswithtickets = await Event.find({
-      where: {
-        id: eventId
-      },
-      join: {
-        alias: "event",
-        leftJoinAndSelect: {
-          "tickets": "event.tickets"
-        }
-      }
-    })
-    // console.log("1", eventswithtickets[0].tickets)
+  //   // const manytickets = await Event.find({where: {id: eventId}/* , relations: ["currentTicket"] } */)
+  //   // console.log(`manytickets ${manytickets.length}`)
 
-    let allTickets = eventswithtickets[0].tickets
-    // console.log(allTickets[2].price)
+  //   const eventswithtickets = await Event.find({
+  //     where: {
+  //       id: eventId
+  //     },
+  //     join: {
+  //       alias: "event",
+  //       leftJoinAndSelect: {
+  //         "tickets": "event.tickets"
+  //       }
+  //     }
+  //   })
+  //   // console.log("1", eventswithtickets[0].tickets)
 
-    let allPrice = (allTickets.map(singleTicket => singleTicket.price))
+  //   let allTickets = eventswithtickets[0].tickets
+  //   // console.log(allTickets[2].price)
 
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    let totalNumber = allPrice.reduce(reducer);
-    let averagePrice = totalNumber / allPrice.length
-    
-    // console.log(averageNumber)
+  //   let allPrice = (allTickets.map(singleTicket => singleTicket.price))
 
+  //   const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  //   let totalNumber = allPrice.reduce(reducer);
+  //   let averagePrice = totalNumber / allPrice.length
 
-
-    // const userRepository = getRepository(Ticket)
-    // console.log(await userRepository.find({ select: ["title"]}))
-    // console.log(await userRepository.find({ relations: ["event"]}))
-
-    if (currentTicket !== undefined) {
-      // console.log("important", currentTicket)
-
-      /* calculate the risk of the author */
-      const sameAuthors = await Ticket.find({ where: { author: currentTicket.author } })
-      // console.log(`number of tickets with the same author: ${sameAuthors.length}`)
-      authourRisk = 0
-      if (sameAuthors.length === 1) authourRisk = 4
-      // console.log(`The author risk is ${authourRisk}`)
-
-      // calculate the risk of averaging
-      averageRisk = -((currentTicket.price - averagePrice) / averagePrice)*100
-      // console.log(currentTicket.price)
-      // console.log(averagePrice)
-      if (averageRisk < 0) averageRisk=Math.max(averageRisk, -15)
-      // console.log("averageRisk is", averageRisk)
-      
-
-      /* calculate the risk of updated hour (9-17) */
-      const updated = currentTicket.createdAt
-      const updatedHour = Number(updated.toISOString().split("T")[1].split(":")[0])
-      // console.log(`updated hour is ${Number(updatedHour)}`)
-      if (updatedHour >= 9 && updatedHour <= 17) updatedRisk = -13
-      if (updatedHour < 9 || updatedHour > 17) updatedRisk = 13
-      // console.log(`The updated risk is ${updatedRisk}`)
-
-      totalRisk = authourRisk + updatedRisk + averageRisk
-      if (totalRisk < 2) totalRisk = 2
-      if (totalRisk > 98) totalRisk = 98
-      // console.log(`and the total Risk is ${totalRisk}`)
-      currentTicket.risk = Math.round(totalRisk)
-      await currentTicket.save()
-      return currentTicket
-    }
+  //   // console.log(averageNumber)
 
 
 
-    // let ticket1 : Ticket[]
-    // if (currentTicket !== undefined) {
-    //   currentTicket({user})
-    //   console.log(currentTicket.{user_id})
-    // ticket1 = await Ticket.find({where: { user_id: currentTicket.user}})
-    // console.log(ticket1.length)
-  }
+  //   // const userRepository = getRepository(Ticket)
+  //   // console.log(await userRepository.find({ select: ["title"]}))
+  //   // console.log(await userRepository.find({ relations: ["event"]}))
+
+  //   if (currentTicket !== undefined) {
+  //     // console.log("important", currentTicket)
+
+  //     /* calculate the risk of the author */
+  //     const sameAuthors = await Ticket.find({ where: { author: currentTicket.author } })
+  //     // console.log(`number of tickets with the same author: ${sameAuthors.length}`)
+  //     authourRisk = 0
+  //     if (sameAuthors.length === 1) authourRisk = 4
+  //     // console.log(`The author risk is ${authourRisk}`)
+
+  //     // calculate the risk of averaging
+  //     averageRisk = -((currentTicket.price - averagePrice) / averagePrice)*100
+  //     // console.log(currentTicket.price)
+  //     // console.log(averagePrice)
+  //     if (averageRisk < 0) averageRisk=Math.max(averageRisk, -15)
+  //     // console.log("averageRisk is", averageRisk)
+
+
+  //     /* calculate the risk of updated hour (9-17) */
+  //     const updated = currentTicket.createdAt
+  //     const updatedHour = Number(updated.toISOString().split("T")[1].split(":")[0])
+  //     // console.log(`updated hour is ${Number(updatedHour)}`)
+  //     if (updatedHour >= 9 && updatedHour <= 17) updatedRisk = -13
+  //     if (updatedHour < 9 || updatedHour > 17) updatedRisk = 13
+  //     // console.log(`The updated risk is ${updatedRisk}`)
+
+  //     totalRisk = authourRisk + updatedRisk + averageRisk
+  //     if (totalRisk < 2) totalRisk = 2
+  //     if (totalRisk > 98) totalRisk = 98
+  //     console.log(`and the total Risk is ${totalRisk}`)
+  //     currentTicket.risk = Math.round(totalRisk)
+  //     await currentTicket.save()
+  //     return currentTicket
+  //   }
+
+
+
+  //   // let ticket1 : Ticket[]
+  //   // if (currentTicket !== undefined) {
+  //   //   currentTicket({user})
+  //   //   console.log(currentTicket.{user_id})
+  //   // ticket1 = await Ticket.find({where: { user_id: currentTicket.user}})
+  //   // console.log(ticket1.length)
+  // }
 
   // return ticket1
 

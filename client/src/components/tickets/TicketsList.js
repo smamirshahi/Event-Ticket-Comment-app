@@ -30,11 +30,17 @@ class TicketsList extends PureComponent {
     renderTicket = (ticket) => {
         const { /* users,  */history } = this.props
         // console.log("history", history)
+        let riskClass
+        if (ticket.risk > 70) riskClass = "risky"
+        else if (ticket.risk > 30) riskClass = "normalRisk"
+        else riskClass = "safe"
+
 
         return (<Card key={ticket.id} className="ticket-card">
             <CardContent>
                 <Typography variant="subheading" component="h2">
-                    Created by: {ticket.author}
+                    <p className={riskClass}>Created by: {ticket.author}</p>
+                    <p>Risk: {ticket.risk}</p>
                 </Typography>
                 <CardMedia
                     className="ticket-media"

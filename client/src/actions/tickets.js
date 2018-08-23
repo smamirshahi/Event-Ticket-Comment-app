@@ -39,7 +39,22 @@ export const getTickets = (eventId) => (dispatch, getState) => {
   request
     .get(`${baseUrl}/events/${eventId}/tickets`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(result => dispatch(updateTickets(result.body)))
+    .then(result => dispatch(updateTicketSuccess(result.body)))
+    .catch(err => console.error(err))
+}
+
+export const getTicketRisk = (eventId, ticketId) => (dispatch, getState) => {
+  const state = getState()
+  if (!state.currentUser) return null
+  const jwt = state.currentUser.jwt
+  console.log("get ticket risk is called")
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .get(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .then(result => dispatch(updateTicketSuccess(result.body)))
     .catch(err => console.error(err))
 }
 

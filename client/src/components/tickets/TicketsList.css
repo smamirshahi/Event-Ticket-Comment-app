@@ -20,6 +20,17 @@ h2 {
 
   .textss {
     display: flex;
-    color: red
+    color: red;
   }
-  
+
+  .risky {
+    color: red;
+  }
+
+  .normalRisk {
+    color: orange;
+  }
+
+  .safe {
+    color: green;
+  }

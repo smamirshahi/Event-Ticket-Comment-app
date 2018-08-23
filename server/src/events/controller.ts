@@ -18,7 +18,7 @@ import {io} from '../index'
 // }
 
 @JsonController()
-export default class GameController {
+export default class EventController {
 
   @Authorized()
   // @Post('/games')
@@ -134,7 +134,7 @@ export default class GameController {
 
   @Authorized()
   @Get('/events')
-  async getGames() {
+  async getEvents() {
     const allEvent = await Event.find()
     // console.log("the get method is called")
     return allEvent

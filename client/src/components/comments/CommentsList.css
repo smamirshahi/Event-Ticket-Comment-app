@@ -22,4 +22,16 @@ h2 {
     display: flex;
     color: red
   }
+
+  .risky {
+    color: red;
+  }
+
+  .normalRisk {
+    color: orange;
+  }
+
+  .safe {
+    color: green;
+  }
   
