@@ -33,6 +33,9 @@ export default class User extends BaseEntity {
   @Exclude({ toPlainOnly: true })
   password: string
 
+  @Column({ type: 'text', default: "5", nullable: false })
+  permissionLevel: string
+
   async setPassword(rawPassword: string) {
     const hash = await bcrypt.hash(rawPassword, 10)
     this.password = hash

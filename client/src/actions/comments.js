@@ -39,7 +39,7 @@ export const getComments = (eventId, ticketId) => (dispatch, getState) => {
   request
     .get(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(result => dispatch(updateComments(result.body)))
+    .then(result => dispatch(updateCommentSuccess(result.body)))
     .catch(err => console.error(err))
 }
 

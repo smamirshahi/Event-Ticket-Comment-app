@@ -63,11 +63,12 @@ export default (state = null, { type, payload }) => {
         [payload.id]: payload
       }
 
+      
+
     case UPDATE_COMMENTS:
-      return payload.reduce((comments, comment) => {
-        comments[comment.id] = comment
-        return comments
-      }, {})
+    return {
+      ...state,
+    }
 
 
 

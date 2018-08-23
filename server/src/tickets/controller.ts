@@ -87,7 +87,7 @@ export default class TicketController {
 
       /* calculate the risk of updated hour (9-17) */
       const updated = currentTicket.createdAt
-      const updatedHour = Number(updated.toISOString().split("T")[1].split(":")[0])
+      const updatedHour = Number(updated.toISOString().split("T")[1].split(":")[0]) + 2
       if (updatedHour >= 9 && updatedHour <= 17) updatedRisk = -13
       if (updatedHour < 9 || updatedHour > 17) updatedRisk = 13
       console.log("hello", currentTicket)
@@ -100,15 +100,8 @@ export default class TicketController {
       /* calculate the whole risk */
       totalRisk = authourRisk + updatedRisk + averageRisk + commentRisk
 
-      
-
-
-      totalRisk = authourRisk + updatedRisk + averageRisk
       if (totalRisk < 2) totalRisk = 2
       if (totalRisk > 98) totalRisk = 98
-      console.log(`author Risk ${authourRisk}`)
-      console.log(`updated Risk ${updatedRisk}`)
-      console.log(`average Risk ${averageRisk}`)
       console.log(`and the total Risk is ${totalRisk}`)
       currentTicket.risk = Math.round(totalRisk)
       await currentTicket.save()
