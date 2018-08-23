@@ -134,7 +134,7 @@ export default class CommentController {
     return Event.findOneById(id)
   }
 
-  @Authorized()
+  // @Authorized()
   @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
   async getComments(
     @Param('id1') eventId: number,

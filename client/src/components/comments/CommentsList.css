@@ -34,4 +34,8 @@ h2 {
   .safe {
     color: green;
   }
+
+  .commentAuthor {
+    color: skyblue;
+  }
   
