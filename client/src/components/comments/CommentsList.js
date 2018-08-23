@@ -1,14 +1,69 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types';
 import { getComments, createComment } from '../../actions/comments'
 import { getTickets, getTicketRisk } from '../../actions/tickets'
 import { getEvents } from '../../actions/events'
 import { getUsers } from '../../actions/users'
 import CreateComment from './CreateComment'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles';
+// import classnames from 'classnames';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+// import Collapse from '@material-ui/core/Collapse';
+// import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import red from '@material-ui/core/colors/red';
+import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Card, { /* CardActions, */ CardContent, /* CardMedia */ } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './CommentsList.css'
+import compose from 'recompose/compose';
+
+const styles = theme => ({
+    card: {
+        maxWidth: 400,
+        margin: 50,
+        borderStyle: 'dashed',
+    },
+    risky: {
+        color: 'red'
+    },
+    normalRisk: {
+        color: 'orange'
+    },
+    safe: {
+        color: 'green'
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
+    actions: {
+        display: 'flex',
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+        marginLeft: 'auto',
+        [theme.breakpoints.up('sm')]: {
+            marginRight: -8,
+        },
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
+    avatar: {
+        backgroundColor: red[500],
+    },
+});
 
 class CommentsList extends PureComponent {
     componentWillMount() {
@@ -24,13 +79,13 @@ class CommentsList extends PureComponent {
         this.props.createComment(data.text, this.props.match.params.id1, this.props.match.params.id2)
     }
 
-    renderComment = (comment) => {
+    renderComment = (comment, classes) => {
         // const { /* users,  *//* history */ } = this.props
-        return (<Card key={comment.id} className="ticket-card">
+        return (<Card key={comment.id} className={`${classes.card}`}>
+            <CardHeader
+                subheader={`${comment.author}`}
+            />            
             <CardContent>
-                <Typography variant="subheading" component="h2">
-                    <p className="commentAuthor">{comment.author}:</p>
-                </Typography>
                 <Typography component="p">
                     {comment.text}
                 </Typography>
@@ -46,11 +101,8 @@ class CommentsList extends PureComponent {
         }
     }
 
-
-
-
     render() {
-        const { event, /* tickets,  */users, /* authenticated *//* , createEvent */ } = this.props
+        const { event, /* tickets,  */users, classes /* authenticated *//* , createEvent */ } = this.props
         // console.log("tickets",this.props.tickets)
         // if (!authenticated) return (
         //     <Redirect to="/login" />
@@ -71,21 +123,20 @@ class CommentsList extends PureComponent {
             riskClass = "safe"
         }
 
-
         return (<Paper className="outer-paper">
             {this.props.getComments(this.props.match.params.id1, this.props.match.params.id2)}
             <h1>Event Name: {event.title} </h1>
-            <h2>Publisher {currentTicket.author}</h2>
+            <h2>Seller: {currentTicket.author}</h2>
             <h2 className={riskClass}>Risk: {currentTicket.risk} %</h2>
+            <h3>Price: € {currentTicket.price}</h3>
             <img src={currentTicket.picture} alt={"ticketPicture"}></img>
-            <h3>Price: {currentTicket.price}</h3>
             <h3>Description: {currentTicket.description}</h3>
 
             {/* {console.log("current user", this.props.currentUser)}
             {console.log("all users", this.props.users)} */}
 
             <div>
-                {Object.values(currentTicket.comments).sort((a, b) => b.id - a.id).map(comment => this.renderComment(comment))}
+                {Object.values(currentTicket.comments).sort((a, b) => b.id - a.id).map(comment => this.renderComment(comment, classes))}
                 {/* {currentTicket.comments.map(comment => this.renderComment(comment))} */}
             </div>
 
@@ -113,4 +164,13 @@ const mapDispatchToProps = {
     getEvents, getUsers, getTickets, getTicketRisk, createComment, getComments
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)
+CommentsList.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+// export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)
+
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps)
+)(CommentsList);

@@ -76,10 +76,10 @@ class EventsList extends PureComponent {
         // console.log("history", history)
 
         return (<Card key={event.id} className={classes.card}>
-<CardHeader        
-          title={event.title}
-          subheader={`from ${event.start} to ${event.end}`}
-        />
+            <CardHeader        
+                title={event.title}
+                subheader={`from ${event.start} to ${event.end}`}
+             />
 
 
             <CardContent>
@@ -104,10 +104,10 @@ class EventsList extends PureComponent {
                 <p>{event.end}</p>
             </CardContent> */}
             <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
+          <IconButton aria-label="Edit">
             <EditIcon />
           </IconButton>
-          <IconButton aria-label="Share">
+          <IconButton aria-label="Delete">
             <DeleteIcon />
           </IconButton>
         </CardActions>
