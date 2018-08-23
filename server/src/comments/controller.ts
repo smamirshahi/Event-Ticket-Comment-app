@@ -125,14 +125,14 @@ export default class CommentController {
   //   return game
   // }
 
-  // @Authorized()
-  // @Get('/events/:id([0-9]+)')
-  // // getGame(
-  // getEvent(
-  //   @Param('id') id: number
-  // ) {
-  //   return Event.findOneById(id)
-  // }
+  @Authorized()
+  @Get('/events/:id([0-9]+)')
+  // getGame(
+  getEvent(
+    @Param('id') id: number
+  ) {
+    return Event.findOneById(id)
+  }
 
   // @Authorized()
   // @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
@@ -144,12 +144,13 @@ export default class CommentController {
   //   let authourRisk
   //   let totalRisk
   //   let averageRisk
+  //   let commentRisk
   //   console.log("hello")
   //   const currentTicket = await Ticket.findOneById(ticketId)
 
   //   const currentEvent = await Event.findOneById(eventId)
   //   if (currentEvent !== undefined) {
-  //   // console.log(currentEvent.id)
+  //     // console.log(currentEvent.id)
   //   }
 
   //   // const manytickets = await Event.find({where: {id: eventId}/* , relations: ["currentTicket"] } */)
@@ -186,6 +187,7 @@ export default class CommentController {
   //   // console.log(await userRepository.find({ relations: ["event"]}))
 
   //   if (currentTicket !== undefined) {
+  //     console.log("comment length", currentTicket.comments.length)
   //     // console.log("important", currentTicket)
 
   //     /* calculate the risk of the author */
@@ -195,11 +197,11 @@ export default class CommentController {
   //     if (sameAuthors.length === 1) authourRisk = 4
   //     // console.log(`The author risk is ${authourRisk}`)
 
-  //     // calculate the risk of averaging
-  //     averageRisk = -((currentTicket.price - averagePrice) / averagePrice)*100
+  //     /* calculate the risk of averaging */
+  //     averageRisk = -((currentTicket.price - averagePrice) / averagePrice) * 100
   //     // console.log(currentTicket.price)
   //     // console.log(averagePrice)
-  //     if (averageRisk < 0) averageRisk=Math.max(averageRisk, -15)
+  //     if (averageRisk < 0) averageRisk = Math.max(averageRisk, -15)
   //     // console.log("averageRisk is", averageRisk)
 
 
@@ -211,7 +213,16 @@ export default class CommentController {
   //     if (updatedHour < 9 || updatedHour > 17) updatedRisk = 13
   //     // console.log(`The updated risk is ${updatedRisk}`)
 
-  //     totalRisk = authourRisk + updatedRisk + averageRisk
+  //     /* calculate the risk of low comments */
+  //     let numberOfComments = currentTicket.comments.length
+  //     commentRisk = 0
+  //     if (numberOfComments < 3) commentRisk = 6
+
+  //     console.log("and the comment risk is equal to", commentRisk)
+
+
+  //     /* calculate the whole risk */
+  //     totalRisk = authourRisk + updatedRisk + averageRisk + commentRisk
   //     if (totalRisk < 2) totalRisk = 2
   //     if (totalRisk > 98) totalRisk = 98
   //     console.log(`and the total Risk is ${totalRisk}`)
@@ -230,11 +241,11 @@ export default class CommentController {
   //   // console.log(ticket1.length)
   // }
 
-  // return ticket1
+  // // return ticket1
 
 
 
-  // console.log("the /events/:id([0-9]+) with get request is called in ticket controller")
-  // return Comment.find({where: { ticket_id: ticketId}}) // find tickets with event_id equal to id
+  // // console.log("the /events/:id([0-9]+) with get request is called in ticket controller")
+  // // return Comment.find({where: { ticket_id: ticketId}}) // find tickets with event_id equal to id
 }
 
