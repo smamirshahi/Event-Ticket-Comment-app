@@ -27,6 +27,10 @@ class CommentsList extends PureComponent {
         this.props.createComment(data.text, this.props.match.params.id1, this.props.match.params.id2)
     }
 
+    // updateTheTicket = () => {
+    //     this.getComments(this.props.match.params.id1, this.props.match.params.id2)
+    // }
+
     renderComment = (comment) => {
         const { /* users,  */history } = this.props
         // console.log("history", history)
@@ -88,6 +92,7 @@ class CommentsList extends PureComponent {
 
 
         return (<Paper className="outer-paper">
+            {this.props.getComments(this.props.match.params.id1, this.props.match.params.id2)}
             <h1>Ticket Details: Publisher {currentTicket.author}</h1>
             <h2 className={riskClass}>Risk: {currentTicket.risk} %</h2>
             <h3>Ticket Picture: {currentTicket.picture}</h3>
@@ -129,7 +134,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-    getEvents, getUsers, getTickets, getTicketRisk, createComment
+    getEvents, getUsers, getTickets, getTicketRisk, createComment, getComments
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)
