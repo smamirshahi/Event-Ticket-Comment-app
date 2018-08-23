@@ -1,4 +1,4 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne, OneToMany, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, ManyToOne, OneToMany/* , UpdateDateColumn */, JoinColumn, CreateDateColumn } from 'typeorm'
 import User from '../users/entity'
 import { Event } from '../events/entity'
 import { Comment } from '../comments/entity'
@@ -34,15 +34,19 @@ export class Ticket extends BaseEntity {
   description
 
   @Column('int', {nullable: true})
-  risk
+  risk: number
   
-  @UpdateDateColumn({ name: 'updated_at', nullable: false })
-  updatedAt: Date
+  @CreateDateColumn({ type: 'timestamp with time zone' ,precision: 6, default: () => "CURRENT_TIMESTAMP", nullable: false })
+  createdAt: Date
+
+  // @UpdateDateColumn({ name: 'updated_at', nullable: false })
+  // updatedAt: Date
 
   @ManyToOne(_ => User, user => user.tickets)
   user: User
 
   @ManyToOne(_ => Event, event => event.tickets)
+  @JoinColumn({ name: "eventId"})
   event: Event
 
   @OneToMany(_ => Comment, comment => comment.ticket, {eager:true}) 
