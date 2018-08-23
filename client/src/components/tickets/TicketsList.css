@@ -5,6 +5,10 @@ h2 {
   
   .ticket-card {
     margin: 10px 10px 10px 0px;
+      /* max-width: 400;
+      margin: 50;
+      border-style: 'dashed';
+      background-color: red; */
   }
   
   .create-ticket {
@@ -15,7 +19,7 @@ h2 {
     margin: auto;
     margin-top: 20px;
     padding: 20px;
-    width: 60%;
+    width: 1000%;
   }
 
   .textss {
