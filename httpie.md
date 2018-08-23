@@ -7,4 +7,8 @@
 <!-- now you can use it to do whatever you want when the code needs authorization. such as: -->
 - http get :4000/users Authorization:"Bearer $JWT"
 
+# calculate the risk
+- http get :4000/events/2/tickets/13 Authorization:"Bearer $JWT"
+
+
 

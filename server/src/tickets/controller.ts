@@ -1,6 +1,7 @@
 import { 
     JsonController, Authorized, CurrentUser, Post, Param/* , BadRequestError */, HttpCode/* , NotFoundError, ForbiddenError */, Get, 
-    Body,/* , Patch */ 
+    Body,
+    BadRequestError,/* , Patch */ 
   } from 'routing-controllers'
   import User from '../users/entity'
   // import { Game, Player, Board } from './entities'
@@ -31,6 +32,7 @@ import {
       @Body() entity: Ticket
     ) {
       const event = await Event.findOneById(eventId)
+      if (!event) throw new BadRequestError(`This event does not exist`)
       // const author = await User.findOneById(user.id)
       const author = user.firstName.concat(` ${user.lastName}`)
   
@@ -44,13 +46,13 @@ import {
         event
       }).save()
 
-      const ticket = await Ticket.findOneById(ticket1.id)
+      // const ticket = await Ticket.findOneById(ticket1.id)
 
       io.emit('action', {
         type: 'ADD_TICKET',
-        payload: ticket
+        payload: await Event.findOneById(event.id)
       })
-      return ticket
+      return ticket1
     }
   
     // @Authorized()
