@@ -214,7 +214,7 @@ export default class GameController {
       totalRisk = authourRisk + updatedRisk + averageRisk
       if (totalRisk < 2) totalRisk = 2
       if (totalRisk > 98) totalRisk = 98
-      // console.log(`and the total Risk is ${totalRisk}`)
+      console.log(`and the total Risk is ${totalRisk}`)
       currentTicket.risk = Math.round(totalRisk)
       await currentTicket.save()
       return currentTicket
