@@ -37,13 +37,13 @@ export default class CommentController {
     return comment1
   }
 
-  @Authorized()
-  @Get('/events/:id([0-9]+)')
-  getEvent(
-    @Param('id') id: number
-  ) {
-    return Event.findOneById(id)
-  }
+  // @Authorized()
+  // @Get('/events/:id([0-9]+)')
+  // getEvent(
+  //   @Param('id') id: number
+  // ) {
+  //   return Event.findOneById(id)
+  // }
 
   // @Authorized()
   @Get('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
@@ -56,7 +56,6 @@ export default class CommentController {
     let totalRisk
     let averageRisk
     let commentRisk
-    console.log("hello")
     const currentTicket = await Ticket.findOneById(ticketId)
 
     const currentEvent = await Event.findOneById(eventId)

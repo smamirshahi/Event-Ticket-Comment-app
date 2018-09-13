@@ -40,7 +40,6 @@ export default class EventController {
 
   @Authorized()
   @Get('/events/:id([0-9]+)')
-  // getGame(
   getEvent(
     @Param('id') id: number
   ) {
