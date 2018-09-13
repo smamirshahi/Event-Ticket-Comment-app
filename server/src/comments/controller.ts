@@ -12,7 +12,7 @@ import { io } from '../index'
 export default class CommentController {
 
   @Authorized()
-  @Post('/events/:id1([0-9]+)/tickets/:id2([0-9]+)')
+  @Post('/events/:id1([0-9]+)/tickets/:id2([0-9]+)') // .../comments
   @HttpCode(201)
   async createTicket(
     @CurrentUser() user: User,
