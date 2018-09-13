@@ -1,16 +1,20 @@
-# Tic Tac Toe Server
+# Event-Ticket-Comment Server
 
-This is a server for playing a multiplayer Tic Tac Toe game. 
+This is a server for using the event-ticket-comment app. 
 
 It has these endpoints:
 
 * `POST /users`: sign up as new user
 * `POST /logins`: log in and receive a JWT
-* `POST /games`: create a new game
-* `POST /games/:id/players`: join an existing game
-* `PATCH /games/:id`: update an existing game
-* `GET /games`: list all games
+* `POST /events`: create a new event
+* `POST /events/:id/tickets`: create a new ticket for event(id)
+* `POST /events/:id1/tickets/:id2`: create a new comment for event(id1) and ticket(id2)
+* `GET /events`: list all events
+* `GET /events/:id`: get an event
+* `GET /events/:id/tickets`: list all tickets for event(id)
+* `GET /events/:id1([0-9]+)/tickets/:id2([0-9]+)`: list all comments for event(id1) and ticket(id2)
 * `GET /users`: list all users
+* `GET /users/:id`: get a user
 
 ## Running
 
@@ -18,5 +22,3 @@ It has these endpoints:
 * Install the dependencies using `yarn install`
 * Compile the app (Typescript > Javascript) using `yarn compile` (during development you can use `yarn watch`)
 * `yarn start`
-
-You can run the tests with `yarn test`. Currently they only cover the game logic. 

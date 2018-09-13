@@ -2,7 +2,6 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 't
 import { Exclude } from 'class-transformer';
 import { MinLength, IsString, IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt'
-// import { Player } from '../games/entities';
 import { Event } from '../events/entity'
 import { Ticket } from '../tickets/entity'
 import { Comment } from '../comments/entity'
@@ -48,14 +47,12 @@ export default class User extends BaseEntity {
   // @OneToMany(_ => Player, player => player.user) 
   // players: Player[]
 
-  // this is a relation, read more about them here:
-  // http://typeorm.io/#/many-to-one-one-to-many-relations
-  @OneToMany(_ => Event, event => event.user) 
+  @OneToMany(_ => Event, event => event.user)
   events: Event[]
 
-  @OneToMany(_ => Ticket, ticket => ticket.user) 
+  @OneToMany(_ => Ticket, ticket => ticket.user)
   tickets: Ticket[]
 
-  @OneToMany(_ => Comment, comment => comment.user) 
+  @OneToMany(_ => Comment, comment => comment.user)
   comments: Comment[]
 }

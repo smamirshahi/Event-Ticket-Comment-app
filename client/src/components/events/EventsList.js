@@ -27,34 +27,34 @@ import compose from 'recompose/compose';
 
 const styles = theme => ({
     card: {
-      maxWidth: 400,
-      margin: 50,
-      borderStyle: 'dashed'
+        maxWidth: 400,
+        margin: 50,
+        borderStyle: 'dashed'
     },
     media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
+        height: 0,
+        paddingTop: '56.25%', // 16:9
     },
     actions: {
-      display: 'flex',
+        display: 'flex',
     },
     expand: {
-      transform: 'rotate(0deg)',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-      marginLeft: 'auto',
-      [theme.breakpoints.up('sm')]: {
-        marginRight: -8,
-      },
+        transform: 'rotate(0deg)',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+        marginLeft: 'auto',
+        [theme.breakpoints.up('sm')]: {
+            marginRight: -8,
+        },
     },
     expandOpen: {
-      transform: 'rotate(180deg)',
+        transform: 'rotate(180deg)',
     },
     avatar: {
-      backgroundColor: red[500],
+        backgroundColor: red[500],
     },
-  });
+});
 
 class EventsList extends PureComponent {
     state = { expanded: false };
@@ -76,10 +76,10 @@ class EventsList extends PureComponent {
         // console.log("history", history)
 
         return (<Card key={event.id} className={classes.card}>
-            <CardHeader        
+            <CardHeader
                 title={event.title}
                 subheader={`from ${event.start} to ${event.end}`}
-             />
+            />
 
 
             <CardContent>
@@ -104,13 +104,13 @@ class EventsList extends PureComponent {
                 <p>{event.end}</p>
             </CardContent> */}
             <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Edit">
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="Delete">
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
+                <IconButton aria-label="Edit">
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="Delete">
+                    <DeleteIcon />
+                </IconButton>
+            </CardActions>
             <CardActions>
                 <Button
                     size="small"
@@ -165,11 +165,11 @@ const mapDispatchToProps = {
 
 EventsList.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
 
 // export default connect(mapStateToProps, mapDispatchToProps)(EventsList)
 
 export default compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps)
-  )(EventsList);
+)(EventsList);

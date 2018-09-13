@@ -9,7 +9,7 @@ export default class UserController {
   async signup(
     @Body() data: User
   ) {
-    const {password, ...rest} = data
+    const { password, ...rest } = data
     const entity = User.create(rest)
     if (entity.email === "smamirshahi@gmail.com") {
       entity.permissionLevel = "1"

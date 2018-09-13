@@ -84,7 +84,7 @@ class CommentsList extends PureComponent {
         return (<Card key={comment.id} className={`${classes.card}`}>
             <CardHeader
                 subheader={`${comment.author}`}
-            />            
+            />
             <CardContent>
                 <Typography component="p">
                     {comment.text}

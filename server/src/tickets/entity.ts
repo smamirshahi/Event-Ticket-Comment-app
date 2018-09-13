@@ -8,32 +8,32 @@ export class Ticket extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
-  
-  @Column('text', {nullable: false})
+
+  @Column('text', { nullable: false })
   author: string
-  
-  @Column('text', {nullable: true})
+
+  @Column('text', { nullable: true })
   picture
 
-  @Column('int', {nullable: false})
+  @Column('int', { nullable: false })
   price
-  
-  @Column('text', {nullable: false})
+
+  @Column('text', { nullable: false })
   description
 
-  @Column('int', {nullable: true})
+  @Column('int', { nullable: true })
   risk: number
-  
-  @CreateDateColumn({ type: 'timestamp with time zone' ,precision: 6, default: () => "CURRENT_TIMESTAMP", nullable: false })
+
+  @CreateDateColumn({ type: 'timestamp with time zone', precision: 6, default: () => "CURRENT_TIMESTAMP", nullable: false })
   createdAt: Date
 
   @ManyToOne(_ => User, user => user.tickets)
   user: User
 
   @ManyToOne(_ => Event, event => event.tickets)
-  @JoinColumn({ name: "eventId"})
+  @JoinColumn({ name: "eventId" })
   event: Event
 
-  @OneToMany(_ => Comment, comment => comment.ticket, {eager:true}) 
+  @OneToMany(_ => Comment, comment => comment.ticket, { eager: true })
   comments: Comment[]
 }

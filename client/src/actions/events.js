@@ -17,10 +17,6 @@ const addEvent = event => ({
   payload: event
 })
 
-// const updateGameSuccess = () => ({
-//   type: UPDATE_GAME_SUCCESS
-// })
-
 export const getEvents = () => (dispatch, getState) => {
   // const state = getState()
   // if (!state.currentUser) return null

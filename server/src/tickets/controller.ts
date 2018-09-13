@@ -12,7 +12,6 @@ import { io } from '../index'
 export default class TicketController {
 
   @Authorized()
-  // @Post('/games')
   @Post('/events/:id([0-9]+)/tickets')
   @HttpCode(201)
   async createEvent(
