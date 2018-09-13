@@ -12,7 +12,7 @@ It has these endpoints:
 * `GET /events`: list all events
 * `GET /events/:id`: get an event
 * `GET /events/:id/tickets`: list all tickets for event(id)
-* `GET /events/:id1([0-9]+)/tickets/:id2([0-9]+)`: list all comments for event(id1) and ticket(id2)
+* `GET /events/:id1/tickets/:id2`: list all comments for event(id1) and ticket(id2)
 * `GET /users`: list all users
 * `GET /users/:id`: get a user
 
